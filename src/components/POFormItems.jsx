@@ -123,7 +123,7 @@ function POFormItems() {
     var price = document.getElementsByName("unit_price")[0]?.value;
     var nos = document.getElementsByName("qty")[0]?.value;
     setTotal(price * nos);
-    values["total_price"] = price * nos;
+    values["total_price"] = Math.round((price * nos).toFixed(2));
     console.log(values)
     console.log(values.total_price)
     setSubmitted(true);
