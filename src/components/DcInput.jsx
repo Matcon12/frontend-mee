@@ -80,7 +80,7 @@ function DcInput() {
             <form>
             <h1>DC Printing</h1>
                 <label>Outward DC No</label><input type='text' name = 'gcn_no'/>
-                <input value={getCurrentFinancialYear()} name='fin_year'></input>
+                <input name='fin_year' defaultValue={getCurrentFinancialYear()}></input>
                 <button onClick={handleSubmit}>Submit</button>
             </form>
         </div>
