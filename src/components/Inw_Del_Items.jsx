@@ -141,7 +141,7 @@ function Inw_Del_Items() {
     var price = values.unit_price;
     var nos = values.qty_received;
     setTotal(price * nos);
-    values["total_price"] = price * nos;
+    values["total_price"] = Math.round((price * nos).toFixed(2));
     console.log(values)
     console.log(values.total_price)
     setSubmitted(true);
