@@ -81,7 +81,7 @@ function InvoiceProcessing() {
             alert('The open po has expired, check the validity')
           }
           else {
-            alert('Invoice processed successfully')
+            alert('Invoice processed successfully ')
             navigate('/home');
           }
         })
@@ -137,7 +137,7 @@ function InvoiceProcessing() {
             <option value="MAC">MAC</option>
           </select>
           <label>Inward Delivery Challan Number</label><input type="text" name="inw" />
-          <label>Total number of items</label><input type="number" name="no_of_items" onChange={handleQtyChange} />
+          <label>Total number of po_sl_no items</label><input type="number" name="no_of_items" onChange={handleQtyChange} />
           <div>{generateFormFields()}</div>
           <button onClick={handleSubmit}>Submit</button>
 
