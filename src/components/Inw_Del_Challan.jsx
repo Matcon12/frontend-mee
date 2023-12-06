@@ -15,63 +15,67 @@ function Inw_Del_Challan() {
     const [qty,setQty] = useState(0);
 
     const inputs = [
+
+      {
+      id: 6,
+      name: "cust_id",
+      type: "text",
+      label: "Customer ID",
+      required: true,
+       },
+       {
+        id: 4,
+        name: "po_no",
+        type: "text",
+        label: "PO Number",
+      },
+      {
+        id: 5,
+        name: "po_date",
+        type: "date",
+        label: "PO Date",
+        required: true,
+        readOnly: true,
+      },
         {
-            id: 1,
-            name: "grn_no",
-            type: "text",
-            label: "Inward DC Number",
-            required: true,
-          },
+          id: 1,
+          name: "grn_no",
+          type: "text",
+          label: "Inward DC Number",
+          required: true,
+        },
+        {
+          id: 2,
+          name: "grn_date",
+          type: "date",
+          label: "Inward DC Date",
+        },
+      
+        {
+          id: 7,
+          name: "receiver_id",
+          type: "text",
+          label: "Receiver ID",
+          required: true,
+        },
+        {
+          id: 8,
+          name: "consignee_id",
+          type: "text",
+          label: "Consignee ID",
+          required: true,
+        },
+         
           {
-            id: 2,
-            name: "grn_date",
-            type: "date",
-            label: "Inward DC Date",
-          },
-          {
-            id: 4,
-            name: "po_no",
-            type: "text",
-            label: "PO Number",
-          },
-          {
-            id: 5,
-            name: "po_date",
-            type: "date",
-            label: "PO Date",
-            required: true,
-          },
-          {
-            id: 6,
-            name: "receiver_id",
-            type: "text",
-            label: "Receiver ID",
-            required: true,
-          },
-          {
-            id: 7,
-            name: "consignee_id",
-            type: "text",
-            label: "Consignee ID",
-            required: true,
-          },
-            {
-              id: 9,
-              name: "cust_id",
-              type: "text",
-              label: "Customer ID",
-              required: true,
-    
-            },
-            {
-              id : 10,
-              name: "total_items",
-              type: "number",
-              label:"Total Po_Sl_No Items",
-              required : true,
-            }
-           
-    ]
+            id : 10,
+            name: "total_items",
+            type: "number",
+            label:"Total PO_Sl_No Items",
+            required : true,
+          }
+         
+  ]
+  
     
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -86,8 +90,44 @@ function Inw_Del_Challan() {
 
       
     
-      const onChange = (e) => {
+      // const onChange = (e) => {
+      //   setValues({ ...values, [e.target.name]: e.target.value });
+      // };
+
+      const onChange = async (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
+
+        const { name, value } = e.target;
+        setValues((prevValues) => ({ ...prevValues, [name]: value }));
+
+    if (name === 'cust_id') {
+      setValues((prevValues) => ({
+        ...prevValues,
+        receiver_id: value,
+        consignee_id: value,
+        [name]: value,
+      }));
+    } else {
+      setValues((prevValues) => ({
+        ...prevValues,
+        [name]: value,
+      }));
+    }
+
+    if (name === 'po_no' && value) {
+      try {
+        console.log('Before axios request. po_no:', value);
+        const response = await axios.get(`http://52.90.227.20:8080/get-po-details/${value}/`);
+        const poDetails = response.data;
+        setValues((prevValues) => ({
+          ...prevValues,
+          po_date: poDetails.po_date,
+        }));
+        console.log('After axios request. PO details:', poDetails);
+      } catch (error) {
+        console.error('Error getting PO details', error);
+      }
+    }
       };
 
 
@@ -113,6 +153,14 @@ function Inw_Del_Challan() {
           e.preventDefault();
           setOut(true)
       } 
+
+      const handleSelect = (e) => {
+        const { name, value } = e.target;
+        setValues((prevValues) => ({
+          ...prevValues,
+          [name]: value,
+        }));
+      }
 
 
     
@@ -156,16 +204,3 @@ export default Inw_Del_Challan
 
 
 
-
-
-
-
-// const convertDate =(date)=>{
-      
-//   var parts = date.split("-");
-//   var year = parts[0];
-//   var month = parts[1];
-//   var day = parts[2];
-//   return(day + "-" + month + "-" + year);
-
-// }

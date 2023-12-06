@@ -11,30 +11,78 @@ import back from '../images/undo.png';
 function InvoiceProcessing() {
   const navigate = useNavigate();
   const [qty, setQty] = useState(0);
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [Mcc, setMcc] = useState('MEE');
+  const [partDetails, setPartDetails] = useState([]);
 
   const handleQtyChange = (e) => {
     setQty(parseInt(e.target.value, 10));
   }
 
+  const handleChangeGRN = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+  const [formData, setFormData] = useState({
+    items: Array(qty).fill({
+      po_sl_no: '',
+      qty_delivered: '',
+      part_id: '',
+      part_name: '',
+      unit_price: '',
+    }),
+    rejected: 0,
+    mcc: 'MEE',
+    grn_no: '',
+  });
+
+  // const generateFormFields = () => {
+  //   const formFields = [];
+
+  //   for (let i = 0; i < qty; i++) {
+  //     formFields.push(
+  //       <div key={i} className='formInput'>
+  //         <label>PO Serial Number of {i + 1}</label>
+  //         <input type="text" name={`Po_slno_${i}`} />
+  //         <label>Quantity needed for item {i + 1}</label>
+  //         <input type="text" name={`items_${i}`} />
+  //       </div>
+  //     );
+  //   }
+
+  //   return formFields;
+  // }
+
   const generateFormFields = () => {
     const formFields = [];
-
+  
     for (let i = 0; i < qty; i++) {
       formFields.push(
         <div key={i} className='formInput'>
           <label>PO Serial Number of {i + 1}</label>
-          <input type="text" name={`Po_slno_${i}`} />
+          <input type="text" name={`Po_slno_${i}`} onChange={(e) => onChange(e, i)} />
+  
           <label>Quantity needed for item {i + 1}</label>
-          <input type="text" name={`items_${i}`} />
+          <input type="text" name={`items_${i}`} onChange={(e) => onChange(e, i)} />
+          
+          {partDetails[i] && (
+            <div>
+              <p>Part ID: {partDetails[i].part_id}</p>
+              <p>Part Name: {partDetails[i].part_name}</p>
+              <p>Unit Price: {partDetails[i].unit_price}</p>
+            </div>
+          )}
         </div>
       );
     }
-
+  
     return formFields;
   }
+  
 
   const handleSubmit = (event) => {
     const newFormData = {};
@@ -117,6 +165,71 @@ function InvoiceProcessing() {
     var code = document.getElementsByName('mcc')[0]?.value;
     setMcc(code);
   }
+
+  const onChange = async (e, itemIndex) => {
+    const { name, value } = e.target;
+  
+    setFormData((prevData) => {
+      const updatedItems = prevData.items.map((item, i) => {
+        if (i === itemIndex) {
+          return {
+            ...item,
+            [name]: value,
+          };
+        }
+        return item;
+      });
+  
+      return {
+        ...prevData,
+        items: updatedItems,
+      };
+    });
+  
+    // Check if both GRN and PO_SL_NO are entered
+    const grn_no = document.getElementsByName('inw')[0]?.value;
+    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
+  
+    if (grn_no && po_sl_no) {
+      try {
+        const response = await axios.get(`http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`);
+        const partDetails = response.data;
+  
+        console.log(partDetails, "partDetails");
+  
+        // Update state with part details
+        setPartDetails((prevDetails) => {
+          const updatedDetails = [...prevDetails];
+          updatedDetails[itemIndex] = partDetails;
+          return updatedDetails;
+        });
+  
+        setFormData((prevData) => {
+          const updatedItems = prevData.items.map((item, index) => {
+            if (index === itemIndex) {
+              return {
+                ...item,
+                po_sl_no,
+                part_id: partDetails.part_id,
+                part_name: partDetails.part_name,
+                unit_price: partDetails.unit_price,
+              };
+            }
+            return item;
+          });
+  
+          return {
+            ...prevData,
+            items: updatedItems,
+          };
+        });
+      } catch (error) {
+        console.error(`Error fetching details for ${name} ${value}`, error);
+      }
+    }
+  };
+
+
   return (
     <div className='app'>
       <div class="container">
@@ -136,17 +249,14 @@ function InvoiceProcessing() {
             <option value="MAH">MAH</option>
             <option value="MAC">MAC</option>
           </select>
-          <label>Inward Delivery Challan Number</label><input type="text" name="inw" />
+          <label>Inward Delivery Challan Number</label>
+          <input type="text" name="inw"onChange={handleChangeGRN}  />
           <label>Total number of po_sl_no items</label><input type="number" name="no_of_items" onChange={handleQtyChange} />
           <div>{generateFormFields()}</div>
           <button onClick={handleSubmit}>Submit</button>
 
         </div>
       </form>
-      {/* <div>
-        <h2>Form Data:</h2>
-        <pre>{JSON.stringify(formData, null, 2)}</pre>
-      </div> */}
     </div>
   );
 

@@ -25,10 +25,7 @@ function POFormItems() {
       id: 9,
       name: "po_sl_no",
       type: "number",
-      //placeholder: "Confirm Password",
-      //errorMessage: "Passwords don't match!",
       label: "PO Serial Number",
-      //pattern: values.password,
       min: "0",
       oninput: "validity.valid||(value='');",
       required: true,
@@ -37,8 +34,6 @@ function POFormItems() {
       id: 10,
       name: "part_id",
       type: "text",
-      // placeholder: "Customer Name",
-      // errorMessage: "It should be a valid email address!",
       label: "Part Code",
       required: true,
 
@@ -47,8 +42,6 @@ function POFormItems() {
       id: 11,
       name: "qty",
       type: "number",
-      // placeholder: "Customer Name",
-      // errorMessage: "It should be a valid email address!",
       label: "Quantity",
       min: "0",
       oninput: "validity.valid||(value='');",
@@ -59,8 +52,6 @@ function POFormItems() {
       id: 12,
       name: "uom",
       type: "text",
-      // placeholder: "Customer Name",
-      // errorMessage: "It should be a valid email address!",
       label: "Unit of Measurement",
       required: true,
 
@@ -69,12 +60,19 @@ function POFormItems() {
       id: 13,
       name: "unit_price",
       type: "number",
-      // placeholder: "Customer Name",
-      // errorMessage: "It should be a valid email address!",
       label: "Unit Price",
       min: "0",
       oninput: "validity.valid||(value='');",
       required: true,
+    },
+
+    {
+      id: 14,
+      name: "part_name",
+      type: "text",
+      label: "Part Name",
+      readOnly: true,
+
     },
 
   ];
@@ -113,8 +111,30 @@ function POFormItems() {
     setSubmitted(false)
   }, [submitted]);
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+
+    const { name, value } = e.target;
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    
+    if (name === 'part_id' && value) {
+    try {
+      console.log('Before axios request. part_id:', value);
+      const custId = values.cust_id;
+      console.log(custId,"cust id");
+      const response = await axios.get(`http://52.90.227.20:8080/get-part-name/${value}/${custId}/`);
+      const partName = response.data.part_name;
+
+      console.log(partName,"partname from backend");
+
+      setValues((prevValues) => ({ ...prevValues, part_name: partName }));
+      console.log('After axios request. part_name:', partName);
+    } catch (error) {
+      console.error('Error getting part name', error);
+    }
+  }
+
+   
   };
 
 
@@ -164,12 +184,20 @@ function POFormItems() {
       <form>
         <h1>Item {counter}</h1>
         {inputs.map((input) => (
+         input.readOnly ? (
+          <div key={input.id}>
+            <label>{input.label}</label>
+            <div style={{ border: '1px solid #ccc', padding: '5px', overflowWrap: 'break-word', width: '34ch' }}>{values[input.name]}</div>
+
+          </div>
+        ) : (
           <FormInput
             key={input.id}
             {...input}
             value={values[input.name]}
             onChange={onChange}
           />
+        )
         ))}
         <label>Total Price</label>
         <h3>{total}</h3>
@@ -180,60 +208,3 @@ function POFormItems() {
 }
 
 export default POFormItems
-
-// PO_Sl_No
-// Part_ID
-// Quantity
-// UOM
-// Unit_Price
-
-
-// {
-//     id: 9,
-//     name: "po_sl_no",
-//     type: "number",
-//     //placeholder: "Confirm Password",
-//     //errorMessage: "Passwords don't match!",
-//     label: "PO Serial Number",
-//     //pattern: values.password,
-//     required: true,
-//   },
-//   {
-//     id: 10,
-//     name: "part_id",
-//     type: "text",
-//    // placeholder: "Customer Name",
-//    // errorMessage: "It should be a valid email address!",
-//     label: "Part Code",
-//     required: true,
-
-//   },
-//   {
-//     id: 11,
-//     name: "qty",
-//     type: "number",
-//    // placeholder: "Customer Name",
-//    // errorMessage: "It should be a valid email address!",
-//     label: "Quantity",
-//     required: true,
-
-//   },
-//   {
-//     id: 12,
-//     name: "uom",
-//     type: "text",
-//    // placeholder: "Customer Name",
-//    // errorMessage: "It should be a valid email address!",
-//     label: "Unit of Measurement",
-//     required: true,
-
-//   },
-//   {
-//     id: 13,
-//     name: "unit_price",
-//     type: "number",
-//    // placeholder: "Customer Name",
-//    // errorMessage: "It should be a valid email address!",
-//     label: "Unit Price",
-//     required: true,
-//   },
