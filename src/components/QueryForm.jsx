@@ -90,7 +90,7 @@ const QueryForm = () => {
     if (name === "cust_id" && value) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${value}`
+          `http://52.90.227.20:8080/get-CN/${value}/`
         );
         const CN = response.data.cust_name;
         console.log(CN, "cust name");
