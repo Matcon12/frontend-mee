@@ -125,8 +125,9 @@ const QueryForm = () => {
         const response = await axios.get(
           `http://52.90.227.20:8080/get-po-details/${value}/`
         );
+        console.log("after try");
         const poDetails = response.data;
-
+        console.log("after axios request. PO details:", poDetails);
         setValues((prevValues) => ({
           ...prevValues,
           po_date: poDetails.po_date,
