@@ -126,6 +126,7 @@ const QueryForm = () => {
         const response = await axios.get(
           `http://52.90.227.20:8080/get-po-details/${value}/`
         );
+        console.log("hello");
         console.log("After axios request. PO details:", response.data);
 
         const poDetails = response.data;
@@ -139,7 +140,7 @@ const QueryForm = () => {
           try {
             const custId = poDetails.cust_id;
             const responseCust = await axios.get(
-              `http://52.90.227.20:8080/get-CN/${custId}`
+              `http://52.90.227.20:8080/get-CN/${custId}/`
             );
             const custName = responseCust.data.cust_name;
 
