@@ -90,7 +90,7 @@ const QueryForm = () => {
     if (name === "cust_id" && value) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/get-CN/${value}`
+          `http://52.90.227.20:8080/get-CN/${value}`
         );
         const CN = response.data.cust_name;
         console.log(CN, "cust name");
@@ -107,7 +107,7 @@ const QueryForm = () => {
     if (name === "part_id" && value && values.cust_id) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/get-part-name/${value}/${values.cust_id}/`
+          `http://52.90.227.20:8080/get-part-name/${value}/${values.cust_id}/`
         );
         const partName = response.data.part_name;
 
@@ -123,7 +123,7 @@ const QueryForm = () => {
     if (name === "po_no" && value) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/get-po-details/${value}/`
+          `http://52.90.227.20:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
 
@@ -136,7 +136,7 @@ const QueryForm = () => {
         try {
           const custId = poDetails.cust_id;
           const responseCust = await axios.get(
-            `http://localhost:5000/get-CN/${custId}`
+            `http://52.90.227.20:8080/get-CN/${custId}`
           );
           const custName = responseCust.data.cust_name;
 
@@ -157,7 +157,7 @@ const QueryForm = () => {
     if (name === "grn_no" && value) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/get-inw-details/${value}/`
+          `http://52.90.227.20:8080/get-inw-details/${value}/`
         );
         const inwDetails = response.data;
 
@@ -172,7 +172,7 @@ const QueryForm = () => {
         try {
           const custId = inwDetails.cust_id;
           const responseCust = await axios.get(
-            `http://localhost:5000/get-CN/${custId}`
+            `http://52.90.227.20:8080/get-CN/${custId}`
           );
           const custName = responseCust.data.cust_name;
 
@@ -194,7 +194,7 @@ const QueryForm = () => {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://localhost:5000/logout/")
+        .post("http://52.90.227.20:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert(response.data.message);
