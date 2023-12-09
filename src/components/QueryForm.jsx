@@ -120,7 +120,7 @@ const QueryForm = () => {
       }
     }
 
-    if (name === "po_no" && value) {
+  if (name === "po_no" && value) {
       try {
         const response = await axios.get(
           `http://52.90.227.20:8080/get-po-details/${value}/`
