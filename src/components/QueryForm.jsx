@@ -122,31 +122,36 @@ const QueryForm = () => {
 
     if (name === "po_no" && value) {
       try {
+        console.log("Before axios request");
         const response = await axios.get(
           `http://52.90.227.20:8080/get-po-details/${value}/`
         );
-        console.log("after try");
+        console.log("After axios request. PO details:", response.data);
+
         const poDetails = response.data;
-        console.log("after axios request. PO details:", poDetails);
-        setValues((prevValues) => ({
-          ...prevValues,
-          po_date: poDetails.po_date,
-          cust_id: poDetails.cust_id,
-        }));
-
-        try {
-          const custId = poDetails.cust_id;
-          const responseCust = await axios.get(
-            `http://52.90.227.20:8080/get-CN/${custId}`
-          );
-          const custName = responseCust.data.cust_name;
-
+        if (poDetails) {
           setValues((prevValues) => ({
             ...prevValues,
-            cust_name: custName,
+            po_date: poDetails.po_date,
+            cust_id: poDetails.cust_id,
           }));
-        } catch (error) {
-          console.error("Error fetching cust_name:", error);
+
+          try {
+            const custId = poDetails.cust_id;
+            const responseCust = await axios.get(
+              `http://52.90.227.20:8080/get-CN/${custId}`
+            );
+            const custName = responseCust.data.cust_name;
+
+            setValues((prevValues) => ({
+              ...prevValues,
+              cust_name: custName,
+            }));
+          } catch (error) {
+            console.error("Error fetching cust_name:", error);
+          }
+        } else {
+          console.error("Empty response from get-po-details endpoint");
         }
 
         console.log("After axios request. PO details:", poDetails);
