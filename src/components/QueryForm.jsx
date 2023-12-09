@@ -136,7 +136,7 @@ const QueryForm = () => {
         try {
           const custId = poDetails.cust_id;
           const responseCust = await axios.get(
-            `http://52.90.227.20:8080/get-CN/${custId}/`
+            `http://52.90.227.20:8080/get-CN/${custId}`
           );
           const custName = responseCust.data.cust_name;
 
