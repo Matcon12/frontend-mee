@@ -6,3 +6,7 @@ cd 'mee-material-management'
 
 echo Installing npm packages...
 npm install
+echo Installing npx globally 
+npm install -g npx
+echo Killing port 
+npm install kill-port
