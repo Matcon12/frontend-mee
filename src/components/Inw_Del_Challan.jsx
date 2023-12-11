@@ -14,68 +14,64 @@ function Inw_Del_Challan() {
     const [submitted,setSubmitted] = useState(false);
     const [qty,setQty] = useState(0);
 
-    const inputs = [
-
-      {
+   const inputs = [
+    {
+      id: 4,
+      name: "po_no",
+      type: "text",
+      label: "PO Number",
+    },
+    {
+      id: 5,
+      name: "po_date",
+      type: "date",
+      label: "PO Date",
+      required: true,
+      readOnly: true,
+    },
+    {
       id: 6,
       name: "cust_id",
       type: "text",
       label: "Customer ID",
       required: true,
-       },
-       {
-        id: 4,
-        name: "po_no",
-        type: "text",
-        label: "PO Number",
-      },
-      {
-        id: 5,
-        name: "po_date",
-        type: "date",
-        label: "PO Date",
-        required: true,
-        readOnly: true,
-      },
-        {
-          id: 1,
-          name: "grn_no",
-          type: "text",
-          label: "Inward DC Number",
-          required: true,
-        },
-        {
-          id: 2,
-          name: "grn_date",
-          type: "date",
-          label: "Inward DC Date",
-        },
-      
-        {
-          id: 7,
-          name: "receiver_id",
-          type: "text",
-          label: "Receiver ID",
-          required: true,
-        },
-        {
-          id: 8,
-          name: "consignee_id",
-          type: "text",
-          label: "Consignee ID",
-          required: true,
-        },
-         
-          {
-            id : 10,
-            name: "total_items",
-            type: "number",
-            label:"Total PO_Sl_No Items",
-            required : true,
-          }
-         
-  ]
-  
+    },
+    {
+      id: 7,
+      name: "receiver_id",
+      type: "text",
+      label: "Receiver ID",
+      required: true,
+    },
+    {
+      id: 8,
+      name: "consignee_id",
+      type: "text",
+      label: "Consignee ID",
+      required: true,
+    },
+    {
+      id: 1,
+      name: "grn_no",
+      type: "text",
+      label: "Inward DC Number",
+      required: true,
+    },
+    {
+      id: 2,
+      name: "grn_date",
+      type: "date",
+      label: "Inward DC Date",
+    },
+
+    {
+      id: 10,
+      name: "total_items",
+      type: "number",
+      label: "Total PO_Sl_No Items",
+      required: true,
+    },
+  ];
     
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -122,6 +118,9 @@ function Inw_Del_Challan() {
         setValues((prevValues) => ({
           ...prevValues,
           po_date: poDetails.po_date,
+          cust_id: poDetails.cust_id,
+          receiver_id: poDetails.cust_id,
+          consignee_id: poDetails.cust_id,
         }));
         console.log('After axios request. PO details:', poDetails);
       } catch (error) {
