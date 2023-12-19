@@ -46,7 +46,7 @@ function DcInput() {
         .post("http://52.90.227.20:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
-          alert(response.data.message);
+          alert("Logout Successful");
           navigate("/");
           setOut(false);
         })

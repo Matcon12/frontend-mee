@@ -20,6 +20,8 @@ import RejectedProcessing from "./components/RejectedProcessing";
 import POFormItems from "./components/POFormItems";
 import Inw_Del_Items from "./components/Inw_Del_Items";
 import QueryForm from "./components/QueryForm";
+import PoReport from "./components/PoReport";
+import InwardDCReport from "./components/InwardDCReport";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
         />
         <Route exact path="/po-form-items" element={<POFormItems />} />
         <Route exact path="/inw-items" element={<Inw_Del_Items />} />
+        <Route exact path="/po-report" element={<PoReport />} />
+        <Route exact path="/inward-dc-report" element={<InwardDCReport />} />
       </Routes>
     </BrowserRouter>
   );

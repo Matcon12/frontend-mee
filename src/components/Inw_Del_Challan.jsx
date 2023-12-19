@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import FormInput from './FormInput';
-import axios from 'axios';
-import matlogo from '../images/matlogo.png';
-import { Link, useNavigate } from 'react-router-dom';
-import home from '../images/home-button.png';
-import back from '../images/undo.png';
-
+import React, { useEffect, useState } from "react";
+import FormInput from "./FormInput";
+import axios from "axios";
+import matlogo from "../images/matlogo.png";
+import { Link, useNavigate } from "react-router-dom";
+import home from "../images/home-button.png";
+import back from "../images/undo.png";
 
 function Inw_Del_Challan() {
+  const [values, setValues] = useState({});
+  const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
+  const [qty, setQty] = useState(0);
 
-    const [values,setValues] = useState({});
-    const navigate = useNavigate();
-    const [submitted,setSubmitted] = useState(false);
-    const [qty,setQty] = useState(0);
-
-   const inputs = [
+  const inputs = [
     {
       id: 4,
       name: "po_no",
@@ -72,31 +70,34 @@ function Inw_Del_Challan() {
       required: true,
     },
   ];
-    
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      var nos = document.getElementsByName("total_items")[0]?.value;
-      setQty(nos)
-      console.log(values)
-      console.log(nos)
-      navigate(`/inw-items?qty=${nos}`,{state:{...values}});
 
-      setSubmitted(true);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const inwDcDate = new Date(values.inw_dc_date);
+    const poDate = new Date(values.po_date);
+    console.log("Inward DC Date:", inwDcDate);
+    console.log("PO Date:", poDate);
+    if (inwDcDate < poDate) {
+      alert("Inward DC Date should not be less than PO Date");
+      return;
     }
+    var nos = document.getElementsByName("total_items")[0]?.value;
+    setQty(nos);
+    console.log(values);
+    console.log(nos);
+    navigate(`/inw-items?qty=${nos}`, { state: { ...values } });
 
-      
-    
-      // const onChange = (e) => {
-      //   setValues({ ...values, [e.target.name]: e.target.value });
-      // };
+    setSubmitted(true);
+  };
 
-      const onChange = async (e) => {
-        setValues({ ...values, [e.target.name]: e.target.value });
+  const onChange = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
 
-        const { name, value } = e.target;
-        setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    const { name, value } = e.target;
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
 
-    if (name === 'cust_id') {
+    if (name === "cust_id") {
       setValues((prevValues) => ({
         ...prevValues,
         receiver_id: value,
@@ -110,10 +111,12 @@ function Inw_Del_Challan() {
       }));
     }
 
-    if (name === 'po_no' && value) {
+    if (name === "po_no" && value) {
       try {
-        console.log('Before axios request. po_no:', value);
-        const response = await axios.get(`http://52.90.227.20:8080/get-po-details/${value}/`);
+        console.log("Before axios request. po_no:", value);
+        const response = await axios.get(
+          `http://52.90.227.20:8080/get-po-details/${value}/`
+        );
         const poDetails = response.data;
         setValues((prevValues) => ({
           ...prevValues,
@@ -122,84 +125,82 @@ function Inw_Del_Challan() {
           receiver_id: poDetails.cust_id,
           consignee_id: poDetails.cust_id,
         }));
-        console.log('After axios request. PO details:', poDetails);
+        console.log("After axios request. PO details:", poDetails);
       } catch (error) {
-        console.error('Error getting PO details', error);
+        console.error("Error getting PO details", error);
       }
     }
-      };
+  };
 
+  const [out, setOut] = useState(false);
+  useEffect(() => {
+    if (out) {
+      axios
+        .post("http://52.90.227.20:8080/logout/")
+        .then((response) => {
+          console.log("POST request successful", response);
+          alert("Logout Successful");
+          navigate("/");
+          setOut(false);
+        })
+        .catch((error) => {
+          console.error("Error making POST request", error);
+        });
+    }
+  }, [out]);
 
-      const [out,setOut] = useState(false);
-      useEffect(()=>{
-        if(out)
-        {
-          axios.post('http://52.90.227.20:8080/logout/')
-            .then((response) => {
-              console.log('POST request successful', response);
-              alert(response.data.message)
-              navigate('/')
-              setOut(false)
-    
-            })
-            .catch((error) => {
-              console.error('Error making POST request', error);
-            });
-          }
-        },[out])
+  const handleLogout = (e) => {
+    e.preventDefault();
+    setOut(true);
+  };
 
-        const handleLogout = (e) =>{
-          e.preventDefault();
-          setOut(true)
-      } 
+  const handleSelect = (e) => {
+    const { name, value } = e.target;
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
+  };
 
-      const handleSelect = (e) => {
-        const { name, value } = e.target;
-        setValues((prevValues) => ({
-          ...prevValues,
-          [name]: value,
-        }));
-      }
-
-
-    
-      return (
-        <div className="app">
-          <div class="container">
-          <img src={back} onClick={()=>navigate(-1)} alt = "back button" className='back' />
-          <button className='logout' onClick={handleLogout}>Logout</button>
-            <img src={matlogo} alt="MatconLogo"  className="logo"/>
-            <Link to ='/home'>
-            <img src ={home} alt='home' className='logo2'/>
-            </Link>
-            </div>
-          <form onSubmit={handleSubmit}>
-            <h1>Inward Delivery Challan</h1>
-            <label>Rework DC</label>
-            <br></br>
-            <select type='boolean' defaultValue="false" name='rework_dc'>
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select>
-            <br></br>
-            <br></br>
-            {inputs.map((input) => (
-              <FormInput
-                key={input.id}
-                {...input}
-                value={values[input.name]}
-                onChange={onChange}
-              />
-            ))}
-            <button>Submit</button>
-          </form>
-        </div>
-      );
+  return (
+    <div className="app">
+      <div class="container">
+        <img
+          src={back}
+          onClick={() => navigate(-1)}
+          alt="back button"
+          className="back"
+        />
+        <button className="logout" onClick={handleLogout}>
+          Logout
+        </button>
+        <img src={matlogo} alt="MatconLogo" className="logo" />
+        <Link to="/home">
+          <img src={home} alt="home" className="logo2" />
+        </Link>
+      </div>
+      <form onSubmit={handleSubmit}>
+        <h1>Inward Delivery Challan</h1>
+        <label>Rework DC</label>
+        <br></br>
+        <select type="boolean" defaultValue="false" name="rework_dc">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+        <br></br>
+        <br></br>
+        {inputs.map((input) => (
+          <FormInput
+            key={input.id}
+            {...input}
+            value={values[input.name]}
+            onChange={onChange}
+          />
+        ))}
+        <button>Submit</button>
+      </form>
+    </div>
+  );
 }
 
-export default Inw_Del_Challan
-
-
-
-
-
+export default Inw_Del_Challan;

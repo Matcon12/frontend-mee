@@ -1,17 +1,20 @@
-import React from 'react'
-import { useState } from 'react';
-import FormInput from './FormInput';
-import axios from 'axios';
-import { useEffect } from 'react';
-import matlogo from '../images/matlogo.png';
-import { Link, useNavigate } from 'react-router-dom';
-import home from '../images/home-button.png';
-import back from '../images/undo.png';
+import React from "react";
+import { useState } from "react";
+import FormInput from "./FormInput";
+import axios from "axios";
+import { useEffect } from "react";
+import matlogo from "../images/matlogo.png";
+import { Link, useNavigate } from "react-router-dom";
+import home from "../images/home-button.png";
+import back from "../images/undo.png";
 
 function CustomerMasterForm() {
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState({
+    cust_st_name: "Karnataka",
+    cust_st_code: "29",
+  });
   const [submitted, setSubmitted] = useState(false);
-
+  const [statecode, setStatecode] = useState(29);
   const navigate = useNavigate();
 
   const indianStates = [
@@ -48,45 +51,44 @@ function CustomerMasterForm() {
     "Dadra and Nagar Haveli and Daman and Diu",
     "Lakshadweep",
     "Delhi",
-    "Puducherry"
+    "Puducherry",
   ];
   const gstStateCodes = {
     "Andhra Pradesh": "37",
     "Arunachal Pradesh": "12",
-    "Assam": "18",
-    "Bihar": "10",
-    "Chhattisgarh": "22",
-    "Goa": "30",
-    "Gujarat": "24",
-    "Haryana": "06",
+    Assam: "18",
+    Bihar: "10",
+    Chhattisgarh: "22",
+    Goa: "30",
+    Gujarat: "24",
+    Haryana: "06",
     "Himachal Pradesh": "02",
-    "Jharkhand": "20",
-    "Karnataka": "29",
-    "Kerala": "32",
+    Jharkhand: "20",
+    Karnataka: "29",
+    Kerala: "32",
     "Madhya Pradesh": "23",
-    "Maharashtra": "27",
-    "Manipur": "14",
-    "Meghalaya": "17",
-    "Mizoram": "15",
-    "Nagaland": "13",
-    "Odisha": "21",
-    "Punjab": "03",
-    "Rajasthan": "08",
-    "Sikkim": "11",
+    Maharashtra: "27",
+    Manipur: "14",
+    Meghalaya: "17",
+    Mizoram: "15",
+    Nagaland: "13",
+    Odisha: "21",
+    Punjab: "03",
+    Rajasthan: "08",
+    Sikkim: "11",
     "Tamil Nadu": "33",
-    "Telangana": "36",
-    "Tripura": "16",
+    Telangana: "36",
+    Tripura: "16",
     "Uttar Pradesh": "09",
-    "Uttarakhand": "05",
+    Uttarakhand: "05",
     "West Bengal": "19",
     "Andaman and Nicobar Islands": "35",
-    "Chandigarh": "04",
+    Chandigarh: "04",
     "Dadra and Nagar Haveli and Daman and Diu": "26",
-    "Lakshadweep": "31",
-    "Delhi": "07",
-    "Puducherry": "34"
+    Lakshadweep: "31",
+    Delhi: "07",
+    Puducherry: "34",
   };
-
 
   const inputs = [
     {
@@ -136,57 +138,56 @@ function CustomerMasterForm() {
       label: "Customer GST ID",
       required: true,
     },
-
   ];
 
-  const [statecode, setStatecode] = useState(0)
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (values.cust_id.length != 4) {
-      alert('Enter customer id length equal to 4 digits')
+      alert("Enter customer id length equal to 4 digits");
     }
     if (values.cust_pin.length != 6) {
-      alert('Enter pin length equal to 6 digits')
+      alert("Enter pin length equal to 6 digits");
     }
-    console.log(values)
-    setSubmitted(true)
-  }
+    console.log(values);
+    setSubmitted(true);
+  };
 
   const [out, setOut] = useState(false);
   useEffect(() => {
     if (out) {
-      axios.post('http://52.90.227.20:8080/logout/')
+      axios
+        .post("http://52.90.227.20:8080/logout/")
         .then((response) => {
-          console.log('POST request successful', response);
-          alert(response.data)
-          navigate('/')
-          setOut(false)
+          console.log("POST request successful", response);
+          alert("Logout Successful");
+          navigate("/");
+          setOut(false);
         })
         .catch((error) => {
-          console.error('Error making POST request', error);
-
+          console.error("Error making POST request", error);
         });
     }
-  }, [out])
+  }, [out]);
 
   useEffect(() => {
     if (submitted) {
-      axios.post('http://52.90.227.20:8080/customer-master-input/', values)
+      axios
+        .post("http://52.90.227.20:8080/customer-master-input/", values)
         .then((response) => {
-          console.log('POST request successful', response);
-          alert('Data Saved Successfully')
-          navigate('/home')
+          console.log("POST request successful", response);
+          alert("Data Saved Successfully");
+          navigate("/home");
         })
         .catch((error) => {
-          console.error('Error making POST request', error);
+          console.error("Error making POST request", error);
 
-          if (error.response.data['cust_id']) {
-            alert('This customer id already exists')
+          if (error.response.data["cust_id"]) {
+            alert("This customer id already exists");
           }
         });
     }
-    setSubmitted(false)
+    setSubmitted(false);
   }, [values, submitted]);
 
   const onChange = (e) => {
@@ -195,24 +196,31 @@ function CustomerMasterForm() {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    setOut(true)
-  }
+    setOut(true);
+  };
 
   const handleSelect = () => {
-    var state_name = document.getElementsByName('cust_st_name')[0].value;
+    var state_name = document.getElementsByName("cust_st_name")[0].value;
 
-    values['cust_st_code'] = gstStateCodes[state_name]
-    values['cust_st_name'] = state_name
-    setStatecode(gstStateCodes[state_name])
-  }
+    values["cust_st_code"] = gstStateCodes[state_name];
+    values["cust_st_name"] = state_name;
+    setStatecode(gstStateCodes[state_name]);
+  };
   return (
     <div className="app">
-      <img src={back} onClick={() => navigate(-1)} alt="back button" className='back' />
-      <button className='logout' onClick={handleLogout}>Logout</button>
+      <img
+        src={back}
+        onClick={() => navigate(-1)}
+        alt="back button"
+        className="back"
+      />
+      <button className="logout" onClick={handleLogout}>
+        Logout
+      </button>
       <div class="container">
         <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to='/home'>
-          <img src={home} alt="home" className='logo2' />
+        <Link to="/home">
+          <img src={home} alt="home" className="logo2" />
         </Link>
       </div>
       <form onSubmit={handleSubmit}>
@@ -226,18 +234,26 @@ function CustomerMasterForm() {
           />
         ))}
 
-        <label>Enter state name</label><br></br>
-        <br></br><select onChange={handleSelect} name='cust_st_name'>
+        <label>Enter state name</label>
+        <br></br>
+        <br></br>
+        <select
+          onChange={handleSelect}
+          name="cust_st_name"
+          defaultValue="Karnataka"
+        >
           {indianStates.map((state) => (
             <option value={state}>{state}</option>
           ))}
         </select>
         <br></br>
-        <br></br><label>GST state code</label><h3>{statecode}</h3>
+        <br></br>
+        <label>GST state code</label>
+        <h3>{statecode}</h3>
         <button>Submit</button>
       </form>
     </div>
   );
 }
 
-export default CustomerMasterForm
+export default CustomerMasterForm;
