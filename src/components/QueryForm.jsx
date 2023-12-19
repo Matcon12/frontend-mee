@@ -113,6 +113,14 @@ const QueryForm = () => {
     }));
 
     if (name === "cust_id" && value.length <= 4) {
+      setValues((prevValues) => ({
+        ...prevValues,
+        part_id: "",
+        part_name: "",
+        po_sl_no: "",
+        qty: "",
+        unit_price: "",
+      }));
       try {
         const response = await axios.get(
           `http://52.90.227.20:8080/get-CN/${value}/`
