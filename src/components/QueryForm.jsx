@@ -123,6 +123,10 @@ const QueryForm = () => {
         setValues((prevValues) => ({
           ...prevValues,
           cust_name: CN,
+          po_no: "",
+          po_date: "",
+          grn_no: "",
+          grn_date: "",
         }));
       } catch (error) {
         // If there's an error (invalid cust_id), clear cust_name
@@ -130,6 +134,10 @@ const QueryForm = () => {
         setValues((prevValues) => ({
           ...prevValues,
           cust_name: "",
+          po_no: "",
+          po_date: "",
+          grn_no: "",
+          grn_date: "",
         }));
       }
     }
@@ -364,7 +372,7 @@ const QueryForm = () => {
     if (name === "po_sl_no" && value && values.po_no) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/po-sl-no/${values.po_no}/${value}/`
+          `http://52.90.227.20:8080/po-sl-no/${values.po_no}/${value}/`
         );
 
         if (response.data && response.data.part_id) {
@@ -384,7 +392,7 @@ const QueryForm = () => {
             const custId = values.cust_id; // Assuming cust_id is already set
 
             const responsePart = await axios.get(
-              `http://localhost:5000/get-part-name/${partId}/${custId}/`
+              `http://52.90.227.20:8080/get-part-name/${partId}/${custId}/`
             );
             const partDetails = responsePart.data;
 
@@ -448,7 +456,7 @@ const QueryForm = () => {
     if (name === "po_sl_no" && value && values.grn_no) {
       try {
         const response = await axios.get(
-          `http://localhost:5000/po-sl-no-inw/${values.grn_no}/${value}/`
+          `http://52.90.227.20:8080/po-sl-no-inw/${values.grn_no}/${value}/`
         );
 
         if (response.data && response.data.part_id) {
@@ -467,7 +475,7 @@ const QueryForm = () => {
             const custId = values.cust_id; // Assuming cust_id is already set
 
             const responsePart = await axios.get(
-              `http://localhost:5000/get-part-name/${partId}/${custId}/`
+              `http://52.90.227.20:8080/get-part-name/${partId}/${custId}/`
             );
             const partDetails = responsePart.data;
 
@@ -536,7 +544,7 @@ const QueryForm = () => {
         .post("http://52.90.227.20:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
-          alert("Logout Successfull");
+          alert(response.data.message);
           navigate("/");
           setOut(false);
         })

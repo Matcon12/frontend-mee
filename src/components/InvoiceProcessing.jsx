@@ -132,7 +132,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://localhost:5000/invoice-processing/", formData)
+        .post("http://52.90.227.20:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response.data);
 
