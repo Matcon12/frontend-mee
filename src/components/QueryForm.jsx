@@ -164,6 +164,8 @@ const QueryForm = () => {
         ...prevValues,
         part_id: "",
         part_name: "",
+        grn_no: "",
+        grn_date: "",
       }));
       try {
         const response = await axios.get(
@@ -362,103 +364,148 @@ const QueryForm = () => {
     if (name === "po_sl_no" && value && values.po_no) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/po-sl-no/${values.po_no}/${value}/`
+          `http://localhost:5000/po-sl-no/${values.po_no}/${value}/`
         );
-        const poDetails = response.data;
 
-        setValues((prevValues) => ({
-          ...prevValues,
-          part_id: poDetails.part_id,
-          qty: poDetails.qty,
-          unit_price: poDetails.unit_price,
-        }));
-
-        console.log("After axios request. PO details:", poDetails);
-
-        // Fetch part_name based on part_id and cust_id
-        try {
-          const partId = poDetails.part_id;
-          const custId = values.cust_id; // Assuming cust_id is already set
-
-          const responsePart = await axios.get(
-            `http://52.90.227.20:8080/get-part-name/${partId}/${custId}/`
-          );
-          const partDetails = responsePart.data;
+        if (response.data && response.data.part_id) {
+          const poDetails = response.data;
 
           setValues((prevValues) => ({
             ...prevValues,
-            part_name: partDetails.part_name,
-            // Add other fields as needed
+            po_sl_no: value,
+            part_id: poDetails.part_id,
+            qty: poDetails.qty,
+            unit_price: poDetails.unit_price,
           }));
 
-          console.log("After axios request. Part details:", partDetails);
-        } catch (error) {
-          console.error("Error getting part details", error);
+          // Fetch part_name based on part_id and cust_id
+          try {
+            const partId = poDetails.part_id;
+            const custId = values.cust_id; // Assuming cust_id is already set
+
+            const responsePart = await axios.get(
+              `http://localhost:5000/get-part-name/${partId}/${custId}/`
+            );
+            const partDetails = responsePart.data;
+
+            if (partDetails && partDetails.part_name) {
+              setValues((prevValues) => ({
+                ...prevValues,
+                part_name: partDetails.part_name,
+              }));
+            } else {
+              // Clear part_name if the details are not available
+              setValues((prevValues) => ({
+                ...prevValues,
+                part_name: "",
+              }));
+            }
+
+            console.log("After axios request. Part details:", partDetails);
+          } catch (error) {
+            console.error("Error getting part details", error);
+            // Clear related fields if the details are not available
+            setValues((prevValues) => ({
+              ...prevValues,
+              part_name: "",
+            }));
+          }
+        } else {
           // Clear related fields if the details are not available
           setValues((prevValues) => ({
             ...prevValues,
+            po_sl_no: value,
+            part_id: "",
+            qty: "",
+            unit_price: "",
             part_name: "",
-            // Clear other fields as needed
           }));
         }
       } catch (error) {
         console.error("Error getting PO details", error);
-        // Clear related fields if the details are not available
+        // Clear related fields if there's an error
         setValues((prevValues) => ({
           ...prevValues,
+          po_sl_no: value,
           part_id: "",
-          part_name: "",
           qty: "",
           unit_price: "",
+          part_name: "",
         }));
       }
+    } else if (name === "po_sl_no" && !value) {
+      // Clear related fields if po_sl_no is empty
+      setValues((prevValues) => ({
+        ...prevValues,
+        po_sl_no: "",
+        part_id: "",
+        part_name: "",
+        qty: "",
+        unit_price: "",
+      }));
     }
 
     if (name === "po_sl_no" && value && values.grn_no) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/po-sl-no-inw/${values.grn_no}/${value}/`
+          `http://localhost:5000/po-sl-no-inw/${values.grn_no}/${value}/`
         );
-        const inwDetails = response.data;
 
-        setValues((prevValues) => ({
-          ...prevValues,
-          part_id: inwDetails.part_id,
-          qty: inwDetails.qty_received,
-          unit_price: inwDetails.unit_price,
-        }));
-
-        console.log("After axios request. Inw details:", inwDetails);
-
-        // Fetch part_name based on part_id and cust_id
-        try {
-          const partId = inwDetails.part_id;
-          const custId = values.cust_id; // Assuming cust_id is already set
-
-          const responsePart = await axios.get(
-            `http://52.90.227.20:8080/get-part-name/${partId}/${custId}/`
-          );
-          const partDetails = responsePart.data;
+        if (response.data && response.data.part_id) {
+          const inwDetails = response.data;
 
           setValues((prevValues) => ({
             ...prevValues,
-            part_name: partDetails.part_name,
-            // Add other fields as needed
+            part_id: inwDetails.part_id,
+            qty: inwDetails.qty_received,
+            unit_price: inwDetails.unit_price,
           }));
 
-          console.log("After axios request. Part details:", partDetails);
-        } catch (error) {
-          console.error("Error getting part details", error);
+          // Fetch part_name based on part_id and cust_id
+          try {
+            const partId = inwDetails.part_id;
+            const custId = values.cust_id; // Assuming cust_id is already set
+
+            const responsePart = await axios.get(
+              `http://localhost:5000/get-part-name/${partId}/${custId}/`
+            );
+            const partDetails = responsePart.data;
+
+            if (partDetails && partDetails.part_name) {
+              setValues((prevValues) => ({
+                ...prevValues,
+                part_name: partDetails.part_name,
+              }));
+            } else {
+              // Clear part_name if the details are not available
+              setValues((prevValues) => ({
+                ...prevValues,
+                part_name: "",
+              }));
+            }
+
+            console.log("After axios request. Part details:", partDetails);
+          } catch (error) {
+            console.error("Error getting part details", error);
+            // Clear related fields if the details are not available
+            setValues((prevValues) => ({
+              ...prevValues,
+              part_name: "",
+            }));
+          }
+        } else {
           // Clear related fields if the details are not available
           setValues((prevValues) => ({
             ...prevValues,
+            part_id: "",
             part_name: "",
-            // Clear other fields as needed
+            qty: "",
+            unit_price: "",
           }));
         }
       } catch (error) {
         console.error("Error getting PO details", error);
-        // Clear related fields if the details are not available
+        // Clear related fields if there's an error
         setValues((prevValues) => ({
           ...prevValues,
           part_id: "",
@@ -467,6 +514,15 @@ const QueryForm = () => {
           unit_price: "",
         }));
       }
+    } else if (name === "po_sl_no" && !value) {
+      // Clear related fields if po_sl_no is empty
+      setValues((prevValues) => ({
+        ...prevValues,
+        part_id: "",
+        part_name: "",
+        qty: "",
+        unit_price: "",
+      }));
     }
   };
 
