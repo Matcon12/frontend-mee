@@ -75,7 +75,7 @@ const InwardDCReport = () => {
         <Link to="/home">
           <img src={home} alt="home" className="logo2" />
         </Link>
-        <button onClick={getInwardDCReport}>Get Inward DC Report</button>
+        <button onClick={getInwardDCReport}>Download Inward DC Report</button>
       </div>
     </div>
   );

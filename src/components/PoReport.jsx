@@ -76,7 +76,7 @@ const PoReport = () => {
         <Link to="/home">
           <img src={home} alt="home" className="logo2" />
         </Link>
-        <button onClick={getPoReport}>Get Po Report</button>
+        <button onClick={getPoReport}>Download PO Report</button>
       </div>
     </div>
   );
