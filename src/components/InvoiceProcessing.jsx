@@ -138,9 +138,7 @@ function InvoiceProcessing() {
 
           if (response.data.message === "success" && response.data.gcn_no) {
             const gcn_no = response.data.gcn_no;
-            alert(
-              `Invoice processed successfully. Outward DC Number: ${gcn_no}`
-            );
+            alert(`Invoice / DC No: ${gcn_no} generated successfully`);
             navigate("/home");
           } else {
             if (response.data === "zero items") {
