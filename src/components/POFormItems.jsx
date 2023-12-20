@@ -24,7 +24,7 @@ function POFormItems() {
       id: 9,
       name: "po_sl_no",
       type: "number",
-      label: "PO Serial Number",
+      label: "PO Sl No",
       min: "0",
       oninput: "validity.valid||(value='');",
       required: true,

@@ -121,7 +121,7 @@ function CustomerMasterForm() {
       id: 5,
       name: "cust_city",
       type: "text",
-      label: "Customer City",
+      label: "City",
       required: true,
     },
     {
@@ -135,7 +135,7 @@ function CustomerMasterForm() {
       id: 9,
       name: "cust_gst_id",
       type: "text",
-      label: "Customer GST ID",
+      label: "GSTIN",
       required: true,
     },
   ];

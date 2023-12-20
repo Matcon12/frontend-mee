@@ -66,7 +66,7 @@ function Inw_Del_Challan() {
       id: 10,
       name: "total_items",
       type: "number",
-      label: "Total PO_Sl_No Items",
+      label: "Total PO Sl No Items",
       required: true,
     },
   ];

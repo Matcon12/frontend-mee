@@ -97,14 +97,14 @@ function InvoiceReports() {
       <form>
         <h1>Invoice Reports</h1>
         <div className="formInput">
-          <label>Enter the start date</label>
+          <label>From Date</label>
           <input
             type="date"
             name="start_date"
             value={startDate}
             onChange={handleStartDateChange}
           />
-          <label>Enter the end date</label>
+          <label>To Date</label>
           <input
             type="date"
             name="end_date"

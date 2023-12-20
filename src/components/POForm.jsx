@@ -49,7 +49,7 @@ function POForm() {
       id: 7,
       name: "receiver_id",
       type: "text",
-      label: "Receiver Id",
+      label: "Receiver ID",
       required: true,
     },
 
@@ -57,14 +57,14 @@ function POForm() {
       id: 8,
       name: "consignee_id",
       type: "text",
-      label: "Consignee Id",
+      label: "Consignee ID",
       required: true,
     },
     {
       id: 9,
       name: "total_items",
       type: "number",
-      label: "Total Po Sl No Items ",
+      label: "Total PO Sl No Items",
       required: true,
     },
   ];

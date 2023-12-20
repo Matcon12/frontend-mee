@@ -46,14 +46,14 @@ function InvoiceProcessing() {
     for (let i = 0; i < qty; i++) {
       formFields.push(
         <div key={i} className="formInput">
-          <label>PO Serial Number of {i + 1}</label>
+          <label>PO Sl No of {i + 1}</label>
           <input
             type="text"
             name={`Po_slno_${i}`}
             onChange={(e) => onChange(e, i)}
           />
 
-          <label>Quantity needed for item {i + 1}</label>
+          <label>Quantity to be Delivered</label>
           <input
             type="text"
             name={`items_${i}`}
@@ -100,34 +100,6 @@ function InvoiceProcessing() {
     console.log(formData);
     setSubmitted(true);
   };
-
-  // useEffect(() => {
-  //   if (submitted) {
-  //     axios
-  //       .post("http://52.90.227.20:8080/invoice-processing/", formData)
-  //       .then((response) => {
-  //         console.log("POST request successful", response);
-  //         if (response.data == "zero items") {
-  //           alert("Nothing to be delivered");
-  //         } else if (response.data == "grn_no") {
-  //           alert("The inw_dc challan no does not exist");
-  //         } else if (response.data.slice(0, 8) == "po_sl_no") {
-  //           console.log(response.data.slice(0, 8));
-  //           alert(
-  //             "The item does not have a po_sl_no " + response.data.slice(8)
-  //           );
-  //         } else if (response.data == "open_po") {
-  //           alert("The open po has expired, check the validity");
-  //         } else {
-  //           alert("Invoice processed successfully ");
-  //           navigate("/home");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error making POST request", error);
-  //       });
-  //   }
-  // }, [formData, submitted]);
 
   useEffect(() => {
     if (submitted) {

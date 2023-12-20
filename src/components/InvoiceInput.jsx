@@ -79,7 +79,7 @@ function InvoiceInput() {
       </Link>
       <form>
         <h1>Invoice Printing</h1>
-        <label>Outward Dc No</label>
+        <label>Invoice No</label>
         <input type="text" name="gcn_no" />
         <input defaultValue={getCurrentFinancialYear()} name="fin_year"></input>
         <button onClick={handleSubmit}>Submit</button>
