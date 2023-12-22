@@ -90,7 +90,7 @@ function PartMaster() {
         </Link>
       </div>
       <form>
-        <h1>Part Master</h1>
+        <h1>Part Details</h1>
         <div className="formInput">
           <label>Part Code</label>
           <input type="text" name="part_id" />

@@ -224,7 +224,7 @@ function CustomerMasterForm() {
         </Link>
       </div>
       <form onSubmit={handleSubmit}>
-        <h1>Customer Master</h1>
+        <h1>Customer Details</h1>
         {inputs.map((input) => (
           <FormInput
             key={input.id}
