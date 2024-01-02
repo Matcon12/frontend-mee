@@ -60,6 +60,7 @@ function Inw_Del_Challan() {
       name: "grn_date",
       type: "date",
       label: "Inward DC Date",
+      min: values.po_date,
     },
 
     {
