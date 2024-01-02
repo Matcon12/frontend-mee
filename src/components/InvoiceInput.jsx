@@ -16,12 +16,12 @@ function InvoiceInput() {
 
     var gcn_no = document.getElementsByName("gcn_no")[0]?.value;
     var len = gcn_no.length;
-    if (gcn_no[len - 1] == "R") {
-      if (len == 3) gcn_no = "0" + gcn_no;
-      else if (len == 2) gcn_no = "00" + gcn_no;
+    if (gcn_no[len - 1] === "R") {
+      if (len === 3) gcn_no = "0" + gcn_no;
+      else if (len === 2) gcn_no = "00" + gcn_no;
     } else {
-      if (len == 2) gcn_no = "0" + gcn_no;
-      else if (len == 1) gcn_no = "00" + gcn_no;
+      if (len === 2) gcn_no = "0" + gcn_no;
+      else if (len === 1) gcn_no = "00" + gcn_no;
     }
     var gcn = gcn_no + document.getElementsByName("fin_year")[0]?.value;
     console.log(gcn, "gcn_no");
@@ -57,9 +57,8 @@ function InvoiceInput() {
     // Check if the current date is before April 1st
     var cur = today.getFullYear();
     if (currentMonth < 4) {
-      console.log("current year is", cur);
-      console.log("/" + cur - 1 + "-" + (cur % 100));
-      return "/" + cur - 1 + "-" + (cur % 100);
+     
+      return "/" + (cur - 1) + "-" + (cur % 100);
     } else {
       return "/" + cur + "-" + ((cur + 1) % 100);
     }
