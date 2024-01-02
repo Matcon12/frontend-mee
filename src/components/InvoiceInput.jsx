@@ -57,6 +57,7 @@ function InvoiceInput() {
     // Check if the current date is before April 1st
     var cur = today.getFullYear();
     if (currentMonth < 4) {
+      console.log("current year is", cur);
       console.log("/" + cur - 1 + "-" + (cur % 100));
       return "/" + cur - 1 + "-" + (cur % 100);
     } else {
