@@ -10,12 +10,26 @@ import { Link } from "react-router-dom";
 
 const InwardDCReport = () => {
   const [out, setOut] = useState(false);
+  const [custId, setCustId] = useState("");
+  const [poNo, setPoNo] = useState("");
+  const [grnNo, setGrnNo] = useState("");
   const navigate = useNavigate();
+
   const getInwardDCReport = async () => {
     try {
-      const response = await axios.get(
-        `http://52.90.227.20:8080/get-inw-report/`
-      );
+      let apiUrl = "http://52.90.227.20:8080/get-inw-report/";
+
+      if (custId) {
+        apiUrl += `?cust_id=${custId}`;
+        if (poNo) {
+          apiUrl += `&po_no=${poNo}`;
+          if (grnNo) {
+            apiUrl += `&grn_no=${grnNo}`;
+          }
+        }
+      }
+
+      const response = await axios.get(apiUrl);
 
       console.log(response.data.data);
 
@@ -26,11 +40,105 @@ const InwardDCReport = () => {
           console.log("Received data:", responseData);
 
           const ws = XLSX.utils.json_to_sheet(responseData);
+          const htmlString = XLSX.write(
+            { Sheets: { Sheet1: ws }, SheetNames: ["Sheet1"] },
+            { bookType: "html", bookSST: true, type: "binary" }
+          );
 
-          const wb = XLSX.utils.book_new();
-          XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+          // Include Bootstrap CDN link for table styling
+          const bootstrapLink = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">';
 
-          XLSX.writeFile(wb, "InwardDCReport.xlsx");
+          // Add buttons, Bootstrap link, and styles to the HTML content
+          const htmlWithStyles = `
+            <html>
+              <head>
+                ${bootstrapLink}
+                <style>
+                  body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    padding: 20px;
+                  }
+                  h2 {
+                    color: #333;
+                    border-bottom: 2px solid #ccc;
+                    padding-bottom: 10px;
+                    font-size: 1.5em;
+                  }
+                  table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-bottom: 20px;
+                  }
+                  th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: left;
+                    font-size: 0.9em;
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                  }
+                  th {
+                    background-color: #f2f2f2;
+                  }
+                  button {
+                    background-color: #4caf50;
+                    color: white;
+                    padding: 10px 15px;
+                    margin: 10px;
+                    cursor: pointer;
+                    border: none;
+                    border-radius: 5px;
+                  }
+                  button.close {
+                    background-color: #d9534f; /* Custom color for close button */
+                    margin-left: 10px; /* Add some margin to separate it from the download button */
+                  }
+                  button:hover {
+                    background-color: #45a049;
+                  }
+                </style>
+              </head>
+              <body>
+                <h2>Inward DC Report</h2>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        ${Object.keys(responseData[0]).map((header) => `<th>${header}</th>`).join("")}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${responseData.map((row) => `<tr>${Object.values(row).map((value) => `<td>${value}</td>`).join("")}</tr>`).join("")}
+                    </tbody>
+                  </table>
+                </div>
+                <button onclick="closeWindow()">Close</button>
+                <button onclick="downloadExcel()">Download Excel</button>
+              </body>
+            </html>
+          `;
+
+          // Create a Blob containing the HTML data
+          const blob = new Blob([htmlWithStyles], { type: "text/html" });
+
+          // Create a new object URL
+          const url = URL.createObjectURL(blob);
+
+          // Open the URL in a new window
+          const newWindow = window.open(url, "_blank");
+
+          // Define functions on the new window
+          newWindow.closeWindow = function () {
+            newWindow.close();
+          };
+
+          newWindow.downloadExcel = function () {
+            // Convert HTML content to Excel file and trigger download
+            const wb = XLSX.read(htmlString, { type: "binary" });
+            XLSX.writeFile(wb, "InwardDCReport.xlsx");
+          };
         } else {
           console.error("No data available");
         }
@@ -39,6 +147,7 @@ const InwardDCReport = () => {
       console.error(error);
     }
   };
+
   useEffect(() => {
     if (out) {
       axios
@@ -53,30 +162,69 @@ const InwardDCReport = () => {
           console.error("Error making POST request", error);
         });
     }
-  });
+  }, [out, navigate]);
+
   const handleLogout = (e) => {
     e.preventDefault();
     setOut(true);
   };
+
   return (
     <div className="app">
-      <div className="formInput">
+      <img src={matlogo} alt="MatconLogo" className="logo" />
+      <img
+        src={back}
+        onClick={() => navigate(-1)}
+        alt="back button"
+        className="back"
+      />
+      <button className="logout" onClick={handleLogout}>
+        Logout
+      </button>
+      <Link to="/home">
+        <img src={home} alt="home" className="logo2" />
+      </Link>
+      <form>
         <h1>Inward DC Report</h1>
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-        <button onClick={getInwardDCReport}>Download Inward DC Report</button>
-      </div>
+        <div className="formInput">
+          <div>
+            <label htmlFor="custId">Customer ID</label>
+            <input
+              type="text"
+              id="custId"
+              name="custId"
+              value={custId}
+              placeholder="default value (all)"
+              onChange={(e) => setCustId(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="poNo">PO No</label>
+            <input
+              type="text"
+              id="poNo"
+              name="poNo"
+              value={poNo}
+              placeholder="default value (all)"
+              onChange={(e) => setPoNo(e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="grnNo">Inward DC No</label>
+            <input
+              type="text"
+              id="grnNo"
+              name="grnNo"
+              value={grnNo}
+              placeholder="default value (all)"
+              onChange={(e) => setGrnNo(e.target.value)}
+            />
+          </div>
+          <button type="button" onClick={getInwardDCReport}>
+            Show Inward DC Report
+          </button>
+        </div>
+      </form>
     </div>
   );
 };
