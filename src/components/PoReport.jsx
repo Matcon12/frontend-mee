@@ -8,7 +8,7 @@ import back from "../images/undo.png";
 import { useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
-import "../PoReport.css";
+
 
 const PoReport = () => {
   const [out, setOut] = useState(false);
