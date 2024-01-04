@@ -62,7 +62,7 @@ const Home = () => {
           <button className="button">Perform Data Entry</button>
         </Link>
         <Link to="/invoice-processing">
-          <button className="button">Delivery of Finished Goods</button>
+          <button className="button">Invoice Generation</button>
         </Link>
         <Link to="/rejected-processing">
           <button className="button">Delivery of Rejected Goods</button>
