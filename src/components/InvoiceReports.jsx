@@ -142,7 +142,7 @@ function InvoiceReports() {
               </style>
             </head>
             <body>
-              <h2>Inward DC Report</h2>
+              <h2>Invoice Report</h2>
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead>

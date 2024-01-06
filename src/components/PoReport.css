@@ -1,0 +1,21 @@
+.inputGroup {
+  margin-bottom: 15px;
+  /* You can adjust the value to control the spacing */
+}
+
+/* Additional styling if needed */
+label {
+  display: block;
+  /* This ensures labels appear on a new line */
+  margin-bottom: 5px;
+  /* Add some space below each label */
+}
+
+input {
+  width: 100%;
+  /* Make the input field take up the full width */
+  padding: 8px;
+  /* Add padding for better appearance */
+  box-sizing: border-box;
+  /* Include padding in the input field's total width */
+}
