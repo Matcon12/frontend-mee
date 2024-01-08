@@ -14,6 +14,7 @@ const PoReport = () => {
   const [out, setOut] = useState(false);
   const [custId, setCustId] = useState("");
   const [poNo, setPoNo] = useState("");
+  const [poDate, setPodate] = useState("");
   const navigate = useNavigate();
 
   const getPoReport = async () => {
@@ -26,8 +27,13 @@ const PoReport = () => {
         if (poNo) {
           apiUrl += `&po_no=${poNo}`;
         }
+      } else {
+        apiUrl += `?`; 
       }
-
+      if (poDate) {
+        apiUrl += `&po_date=${poDate}`;
+      }
+      console.log("Constructed URL:", apiUrl);
       const response = await axios.get(apiUrl);
       console.log("response from backend");
       console.log(response.data.data);
@@ -62,11 +68,13 @@ const PoReport = () => {
                     color: #333;
                     border-bottom: 2px solid #ccc;
                     padding-bottom: 10px;
+                    font-size: 1.5em;
                   }
                   table {
                     width: 100%;
                     border-collapse: collapse;
                     margin-bottom: 20px;
+                    font-size: 0.9em;
                   }
                   th, td {
                     border: 1px solid #ddd;
@@ -193,6 +201,15 @@ const PoReport = () => {
               value={poNo}
               placeholder="default value (all)"
               onChange={(e) => setPoNo(e.target.value)}
+            />
+          </div>
+          <div>
+            <label>From PO Date</label>
+            <input
+              type="date"
+              value={poDate}
+              placeholder="default value (all)"
+              onChange={(e) => setPodate(e.target.value)}
             />
           </div>
           <button type="button" onClick={getPoReport}>
