@@ -74,7 +74,7 @@ const PoReport = () => {
                     width: 100%;
                     border-collapse: collapse;
                     margin-bottom: 20px;
-                    font-size: 0.9em;
+                   
                   }
                   th, td {
                     border: 1px solid #ddd;
