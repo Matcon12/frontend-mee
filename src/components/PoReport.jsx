@@ -80,6 +80,10 @@ const PoReport = () => {
                     border: 1px solid #ddd;
                     padding: 8px;
                     text-align: left;
+                    font-size: 0.9em;
+                    white-space: nowrap; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                   }
                   th {
                     background-color: #f2f2f2;
