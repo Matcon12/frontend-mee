@@ -42,7 +42,7 @@ function POForm() {
     {
       id: 6,
       name: "quote_ref_no",
-      type: "number",
+      type: "text", 
       label: "Quote Ref Number",
     },
     {

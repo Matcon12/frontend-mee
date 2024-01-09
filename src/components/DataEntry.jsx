@@ -53,16 +53,16 @@ const DataEntry = () => {
       <form>
         <h1>Data Entry</h1>
         <Link to="/cm-form">
-          <button className="button">Customer Details Form</button>
+          <button className="button">Customer Details </button>
         </Link>
         <Link to="/pm-form">
-          <button className="button">Part Details Form</button>
+          <button className="button">Part Details</button>
         </Link>
         <Link to="/po-form">
-          <button className="button">Purchase Details Form</button>
+          <button className="button">Purchase Order</button>
         </Link>
         <Link to="/inw-form">
-          <button className="button">Inward Details Form</button>
+          <button className="button">Inward Delivary Challan</button>
         </Link>
       </form>
     </div>
