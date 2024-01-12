@@ -18,6 +18,7 @@ function Inw_Del_Challan() {
       name: "po_no",
       type: "text",
       label: "PO Number",
+      required: true,
     },
     {
       id: 5,
@@ -61,6 +62,7 @@ function Inw_Del_Challan() {
       type: "date",
       label: "Inward DC Date",
       min: values.po_date,
+      required: true,
     },
 
     {
