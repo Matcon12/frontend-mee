@@ -15,6 +15,15 @@ function InvoiceProcessing() {
   const [submitted, setSubmitted] = useState(false);
   const [Mcc, setMcc] = useState("MEE");
   const [partDetails, setPartDetails] = useState([]);
+  const [poNo, setPoNo] = useState("");
+ 
+  const [consigneeId, setConsigneeId] = useState("");
+  const [values, setValues] = useState({
+    cust_name: "",
+    po_no: "",
+    consignee_id: "",
+  });
+
 
   const handleQtyChange = (e) => {
     setQty(parseInt(e.target.value, 10));
@@ -83,6 +92,8 @@ function InvoiceProcessing() {
     newFormData["mcc"] = document.getElementsByName("mcc")[0].value;
     newFormData["grn_no"] = document.getElementsByName("inw")[0].value;
     newFormData["items"] = document.getElementsByName("no_of_items")[0].value;
+    newFormData["new_cons_id"] = document.getElementsByName("new_cons_id")[0].value;
+    
 
     var obj;
 
@@ -191,50 +202,146 @@ function InvoiceProcessing() {
     const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
       ?.value;
 
-    if (grn_no && po_sl_no) {
+    // if (grn_no && po_sl_no) {
+    //   try {
+    //     const response = await axios.get(
+    //       `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+    //     );
+    //     const partDetails = response.data;
+
+    //     console.log(partDetails, "partDetails");
+
+    //     // Update state with part details
+    //     setPartDetails((prevDetails) => {
+    //       const updatedDetails = [...prevDetails];
+    //       updatedDetails[itemIndex] = partDetails;
+    //       return updatedDetails;
+    //     });
+
+    //     setFormData((prevData) => {
+    //       const updatedItems = prevData.items.map((item, index) => {
+    //         if (index === itemIndex) {
+    //           return {
+    //             ...item,
+    //             po_sl_no,
+    //             part_id: partDetails.part_id,
+    //             part_name: partDetails.part_name,
+    //             unit_price: partDetails.unit_price,
+    //           };
+    //         }
+    //         return item;
+    //       });
+
+    //       return {
+    //         ...prevData,
+    //         items: updatedItems,
+    //       };
+    //     });
+    //   } catch (error) {
+    //     console.error(`Error fetching details for ${name} ${value}`, error);
+    //   }
+    // }
+
+
+    if (grn_no) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+          `http://52.90.227.20:8080/get-inw-details/${grn_no}/`
         );
-        const partDetails = response.data;
+  
+        const inwDetailsResponse = response.data;
+  
+        setValues((prevValues) => ({
+          ...prevValues,
+          po_no: inwDetailsResponse.po_no,
+          
+        }));
+        setConsigneeId(response.data.consignee_id);
+        const consignee_id= inwDetailsResponse.consignee_id;
 
-        console.log(partDetails, "partDetails");
+        const cons_name= await axios.get(
+          `http://52.90.227.20:8080/get-CN/${consignee_id}/`
+        );
 
-        // Update state with part details
-        setPartDetails((prevDetails) => {
-          const updatedDetails = [...prevDetails];
-          updatedDetails[itemIndex] = partDetails;
-          return updatedDetails;
-        });
+        const consignee_name = cons_name.data.cust_name;
+        setValues((prevValues) => ({
+          ...prevValues,
+          consignee_id: consignee_name,
+        }));
+  
+        const custId = inwDetailsResponse.cust_id;
+        
+        const responseCust = await axios.get(
+          `http://52.90.227.20:8080/get-CN/${custId}/`
+        );
+        const custName = responseCust.data.cust_name;
+  
+        setValues((prevValues) => ({
+          ...prevValues,
+          cust_name: custName,
+        }));
 
-        setFormData((prevData) => {
-          const updatedItems = prevData.items.map((item, index) => {
-            if (index === itemIndex) {
+
+  
+        console.log("After axios request. Inw DC details:", inwDetailsResponse);
+         
+
+        const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
+       
+  
+        if (po_sl_no) {
+          try {
+            const response = await axios.get(
+              `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+            );
+            const partDetails = response.data;
+            console.log("partDetails");
+            console.log(partDetails, "partDetails");
+  
+            setPartDetails((prevDetails) => {
+              const updatedDetails = [...prevDetails];
+              updatedDetails[itemIndex] = partDetails;
+              return updatedDetails;
+            });
+  
+            setFormData((prevData) => {
+              const updatedItems = prevData.items.map((item, index) => {
+                if (index === itemIndex) {
+                  return {
+                    ...item,
+                    po_sl_no,
+                    part_id: partDetails.part_id,
+                    part_name: partDetails.part_name,
+                    unit_price: partDetails.unit_price,
+                  };
+                }
+                return item;
+              });
+  
               return {
-                ...item,
-                po_sl_no,
-                part_id: partDetails.part_id,
-                part_name: partDetails.part_name,
-                unit_price: partDetails.unit_price,
+                ...prevData,
+                items: updatedItems,
               };
-            }
-            return item;
-          });
-
-          return {
-            ...prevData,
-            items: updatedItems,
-          };
-        });
+            });
+          } catch (error) {
+            console.error(`Error fetching details for ${name} ${value}`, error);
+          }
+        }
       } catch (error) {
-        console.error(`Error fetching details for ${name} ${value}`, error);
+        console.error("Error getting PO details", error);
+        console.log("URL causing the 404 error:", error.config.url);
       }
     }
   };
 
+  const handleConsigneeIdChange = (e) => {
+    setConsigneeId(e.target.value);
+  };
+
+
   return (
     <div className="app">
-      <div class="container">
+      <div className="container">
         <img
           src={back}
           onClick={() => navigate(-1)}
@@ -265,8 +372,35 @@ function InvoiceProcessing() {
           </select>
           <label>Inward Delivery Challan Number</label>
           <input type="text" name="inw" onChange={handleChangeGRN} />
-          <label>Total number of po_sl_no items</label>
-          <input type="number" name="no_of_items" onChange={handleQtyChange} />
+          <label>Customer Name</label>
+          <input
+            type="text"
+            name="cust_name"
+            value={values.cust_name}
+            readOnly
+          />
+          <label>PO No</label>
+          <input type="text" name="po_no" value={values.po_no} readOnly />
+          <label>Consignee Name</label>
+          <input
+            type="text"
+            name="cust_id"
+            value={values.consignee_id}
+            onChange={handleConsigneeIdChange}
+           
+          />
+           <label>Enter New Consignee ID (if required)</label>
+          <input
+            type="text"
+            name="new_cons_id"
+            maxLength={4}
+          />
+          <label>Total PO Sl No items</label>
+          <input
+            type="number"
+            name="no_of_items"
+            onChange={handleQtyChange}
+          />
           <div>{generateFormFields()}</div>
           <button onClick={handleSubmit}>Submit</button>
         </div>
