@@ -62,6 +62,12 @@ function ReportsPrinting() {
           <Link to="/invoice-reports">
             <button>Invoice Reports</button>
           </Link>
+          <Link to="/customer-report">
+            <button>Customer Reports</button>
+          </Link>
+          <Link to="/part-report">
+            <button>Parts Reports</button>
+          </Link>
           <Link to="/po-report">
             <button>PO Reports</button>
           </Link>

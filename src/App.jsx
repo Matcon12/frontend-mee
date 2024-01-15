@@ -22,6 +22,8 @@ import Inw_Del_Items from "./components/Inw_Del_Items";
 import QueryForm from "./components/QueryForm";
 import PoReport from "./components/PoReport";
 import InwardDCReport from "./components/InwardDCReport";
+import PartReport from "./components/PartReport";
+import CustomerReport from "./components/CustomerReport";
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
         <Route exact path="/inw-items" element={<Inw_Del_Items />} />
         <Route exact path="/po-report" element={<PoReport />} />
         <Route exact path="/inward-dc-report" element={<InwardDCReport />} />
+        <Route exact path="/part-report" element={<PartReport />} />
+        <Route exact path="/customer-report" element={<CustomerReport />} />
       </Routes>
     </BrowserRouter>
   );
