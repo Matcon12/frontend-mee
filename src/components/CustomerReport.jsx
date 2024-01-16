@@ -190,6 +190,7 @@ const CustomerReport = () => {
               value={custId}
               placeholder="default value (all)"
               onChange={(e) => setCustId(e.target.value)}
+              maxLength={4}
             />
           </div>
 
