@@ -1,8 +1,8 @@
 @echo off
 echo Cloning the React.js repository...
-git clone https://github.com/Matcon12/mee-material-management.git
+git clone https://github.com/Matcon12/frontend-mee.git
 
-cd 'mee-material-management'
+cd 'frontend-mee'
 
 echo Installing npm packages...
 npm install
