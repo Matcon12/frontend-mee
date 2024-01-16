@@ -1,4 +1,6 @@
 @echo off
+REM download nodejs and git (if not installed)
+REM 
 echo Cloning the React.js repository...
 git clone https://github.com/Matcon12/frontend-mee.git
 
