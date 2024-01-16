@@ -122,7 +122,7 @@ const PartReport =() =>{
                 </style>
               </head>
               <body>
-                <h2>Customer Report</h2>
+                <h2>Parts Report</h2>
                 <div class="table-responsive">
                   <table class="table table-bordered">
                     <thead>
