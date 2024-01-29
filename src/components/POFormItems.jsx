@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FormInput from "./FormInput";
+import Header from "./common/Header";
 
 function POFormItems() {
   const location = useLocation();
@@ -172,19 +173,7 @@ function POFormItems() {
 
   return (
     <div className="app">
-      <img src={matlogo} alt="matlogo" className="logo" />
-      <button className="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <img
-        src={back}
-        onClick={() => navigate(-1)}
-        alt="back button"
-        className="back"
-      />
-      <Link to="/home">
-        <img src={home} alt="home" className="logo2" />
-      </Link>
+      <Header />
       <form>
         <h1>Item {counter}</h1>
         {inputs.map((input) =>

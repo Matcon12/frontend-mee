@@ -24,8 +24,12 @@ import PoReport from "./components/PoReport";
 import InwardDCReport from "./components/InwardDCReport";
 import PartReport from "./components/PartReport";
 import CustomerReport from "./components/CustomerReport";
+import ProtectedRoutes from "./herlpers/ProtectedRoutes";
+import { useEffect } from "react";
 
 function App() {
+  const isAuth = localStorage.getItem("user") ? true : false;
+
   return (
     <BrowserRouter>
       <Routes>
@@ -42,6 +46,9 @@ function App() {
         <Route exact path="/pm-form" element={<PartMaster />} />
         <Route exact path="/inw-form" element={<Inw_Del_Challan />} />
         <Route exact path="/home" element={<Home />} />
+        {/* <Route element={<ProtectedRoutes />}>
+          <Route path="/home" element={<Home />} />
+        </Route> */}
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/reports-printing" element={<ReportsPrinting />} />
         <Route exact path="/invoice-printing" element={<InvoicePrinting />} />

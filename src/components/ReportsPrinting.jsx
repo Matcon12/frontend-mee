@@ -6,6 +6,7 @@ import axios from "axios";
 import matlogo from "../images/matlogo.png";
 import home from "../images/home-button.png";
 import back from "../images/undo.png";
+import Header from "./common/Header";
 
 function ReportsPrinting() {
   const [submitted, setSubmitted] = useState(false);
@@ -36,19 +37,7 @@ function ReportsPrinting() {
   return (
     <div className="app">
       <div class="container">
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
+        <Header />
       </div>
       <form>
         <h1>Reports Printing</h1>

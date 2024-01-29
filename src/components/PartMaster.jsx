@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
 import back from "../images/undo.png";
+import Header from "./common/Header";
 
 function PartMaster() {
   const [formData, setFormData] = useState({});
@@ -74,21 +75,7 @@ function PartMaster() {
 
   return (
     <div className="app">
-      <div class="container">
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-      </div>
+      <Header />
       <form>
         <h1>Part Details</h1>
         <div className="formInput">

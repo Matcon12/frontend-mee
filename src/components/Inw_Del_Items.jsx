@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import back from "../images/undo.png";
 import { useLocation } from "react-router-dom";
+import Header from "./common/Header";
 
 function Inw_Del_Items() {
   const location = useLocation();
@@ -187,21 +188,7 @@ function Inw_Del_Items() {
 
   return (
     <div className="app">
-      <div class="container">
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-      </div>
+      <Header />
       <form>
         <h1>Item {counter}</h1>
         {inputs.map((input) => (

@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
 import "./PoReport.css";
+import Header from "./common/Header";
 
 const PoReport = () => {
   const [out, setOut] = useState(false);
@@ -173,19 +174,7 @@ const PoReport = () => {
 
   return (
     <div className="app">
-      <img src={matlogo} alt="MatconLogo" className="logo" />
-      <img
-        src={back}
-        onClick={() => navigate(-1)}
-        alt="back button"
-        className="back"
-      />
-      <button className="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <Link to="/home">
-        <img src={home} alt="home" className="logo2" />
-      </Link>
+      <Header />
       <form>
         <h1>PO Report</h1>
         <div className="formInput">

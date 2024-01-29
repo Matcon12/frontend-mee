@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import back from "../images/undo.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Header from "./common/Header";
 
 function InvoiceInput() {
   const navigate = useNavigate();
@@ -66,19 +67,7 @@ function InvoiceInput() {
 
   return (
     <div className="app">
-      <img src={matlogo} alt="MatconLogo" className="logo" />
-      <img
-        src={back}
-        onClick={() => navigate(-1)}
-        alt="back button"
-        className="back"
-      />
-      <button className="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <Link to="/home">
-        <img src={home} alt="home" className="logo2" />
-      </Link>
+      <Header />
       <form>
         <h1>Invoice Printing</h1>
         <label>Invoice No</label>
