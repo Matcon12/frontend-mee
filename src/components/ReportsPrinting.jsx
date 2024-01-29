@@ -43,10 +43,10 @@ function ReportsPrinting() {
         <h1>Reports Printing</h1>
         <div className="formInput">
           <Link to="/invoice-input">
-            <button>Print Invoice</button>
+            <button>View/Print Invoice</button>
           </Link>
           <Link to="/dc-input">
-            <button>Print Delivery Challan</button>
+            <button>View/Print Delivery Challan</button>
           </Link>
           <Link to="/invoice-reports">
             <button>Invoice Report</button>
