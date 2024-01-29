@@ -43,25 +43,25 @@ function ReportsPrinting() {
         <h1>Reports Printing</h1>
         <div className="formInput">
           <Link to="/invoice-input">
-            <button>Invoice</button>
+            <button>Print Invoice</button>
           </Link>
           <Link to="/dc-input">
-            <button>DC</button>
+            <button>Print Delivery Challan</button>
           </Link>
           <Link to="/invoice-reports">
-            <button>Invoice Reports</button>
+            <button>Invoice Report</button>
           </Link>
           <Link to="/customer-report">
-            <button>Customer Reports</button>
+            <button>Customer Details</button>
           </Link>
           <Link to="/part-report">
-            <button>Parts Reports</button>
+            <button>Parts Details</button>
           </Link>
           <Link to="/po-report">
-            <button>PO Reports</button>
+            <button>Purchase Order Report</button>
           </Link>
           <Link to="/inward-dc-report">
-            <button>Inward DC Reports</button>
+            <button>Inward DC Report</button>
           </Link>
         </div>
       </form>
