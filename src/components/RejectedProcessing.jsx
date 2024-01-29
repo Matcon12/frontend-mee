@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
 import back from "../images/undo.png";
+import Header from "./common/Header";
 
 function RejectedProcessing() {
   const navigate = useNavigate();
@@ -120,16 +121,7 @@ function RejectedProcessing() {
   return (
     <div className="app">
       <div class="container">
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
+        <Header />
         <Link to="/home">
           <img src={home} alt="home" className="logo2" />
         </Link>

@@ -7,6 +7,7 @@ import back from "../images/undo.png";
 import { useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
+import Header from "./common/Header";
 
 const InwardDCReport = () => {
   const [out, setOut] = useState(false);
@@ -171,19 +172,7 @@ const InwardDCReport = () => {
 
   return (
     <div className="app">
-      <img src={matlogo} alt="MatconLogo" className="logo" />
-      <img
-        src={back}
-        onClick={() => navigate(-1)}
-        alt="back button"
-        className="back"
-      />
-      <button className="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <Link to="/home">
-        <img src={home} alt="home" className="logo2" />
-      </Link>
+      <Header />
       <form>
         <h1>Inward DC Report</h1>
         <div className="formInput">

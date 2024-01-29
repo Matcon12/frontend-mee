@@ -5,6 +5,7 @@ import matlogo from "../images/matlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import back from "../images/undo.png";
+import Header from "./common/Header";
 
 function Inw_Del_Challan() {
   const [values, setValues] = useState({});
@@ -167,21 +168,7 @@ function Inw_Del_Challan() {
 
   return (
     <div className="app">
-      <div class="container">
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-      </div>
+      <Header />
       <form onSubmit={handleSubmit}>
         <h1>Inward Delivery Challan</h1>
         <label>Rework DC</label>

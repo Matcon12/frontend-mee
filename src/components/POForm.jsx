@@ -9,6 +9,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import home from "../images/home-button.png";
 import { Link } from "react-router-dom";
 import back from "../images/undo.png";
+import Header from "./common/Header";
 
 function POForm() {
   const [values, setValues] = useState({});
@@ -145,21 +146,7 @@ function POForm() {
 
   return (
     <div className="app">
-      <div className="container">
-        <img
-          src={back}
-          onClick={() => navigate(-1)}
-          alt="back button"
-          className="back"
-        />
-        <button className="logout" onClick={handleLogout}>
-          Logout
-        </button>
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-      </div>
+      <Header />
       <div className="container">
         <img src={matlogo} alt="MatconLogo" className="logo" />
       </div>

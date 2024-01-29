@@ -3,10 +3,8 @@ import { useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
 import { useEffect } from "react";
-import matlogo from "../images/matlogo.png";
-import { Link, useNavigate } from "react-router-dom";
-import home from "../images/home-button.png";
-import back from "../images/undo.png";
+import { useNavigate } from "react-router-dom";
+import Header from "./common/Header";
 
 function CustomerMasterForm() {
   const [values, setValues] = useState({
@@ -194,11 +192,6 @@ function CustomerMasterForm() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-    setOut(true);
-  };
-
   const handleSelect = () => {
     var state_name = document.getElementsByName("cust_st_name")[0].value;
 
@@ -208,21 +201,7 @@ function CustomerMasterForm() {
   };
   return (
     <div className="app">
-      <img
-        src={back}
-        onClick={() => navigate(-1)}
-        alt="back button"
-        className="back"
-      />
-      <button className="logout" onClick={handleLogout}>
-        Logout
-      </button>
-      <div class="container">
-        <img src={matlogo} alt="MatconLogo" className="logo" />
-        <Link to="/home">
-          <img src={home} alt="home" className="logo2" />
-        </Link>
-      </div>
+      <Header />
       <form onSubmit={handleSubmit}>
         <h1>Customer Details</h1>
         {inputs.map((input) => (
