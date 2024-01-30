@@ -181,7 +181,7 @@ function InvoiceProcessing() {
     const { name, value } = e.target;
 
     setFormData((prevData) => {
-      const updatedItems = prevData.items.map((item, i) => {
+      const updatedItems = prevData?.items?.map((item, i) => {
         if (i === itemIndex) {
           return {
             ...item,
@@ -305,7 +305,7 @@ function InvoiceProcessing() {
             });
   
             setFormData((prevData) => {
-              const updatedItems = prevData.items.map((item, index) => {
+              const updatedItems = prevData?.items?.map((item, index) => {
                 if (index === itemIndex) {
                   return {
                     ...item,
