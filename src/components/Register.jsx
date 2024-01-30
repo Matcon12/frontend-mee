@@ -2,12 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { redirect } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import matlogo from '../images/matlogo.png';
+import ErrorScreen from './common/ErrorScreen';
 
 
 function Register() {
+
+  const isAuth = localStorage.getItem("user") ? true : false;
 
   const [values, setValues] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -45,6 +47,8 @@ function Register() {
     setSubmitted(false);
   }, [values, submitted]);
 
+
+  if (isAuth) return <ErrorScreen errorCode={403} errorTitle={'Access Denied'} errorMessage={"You can't access the register page if you are already logged in"} />
 
   return (
     <div className='app'>

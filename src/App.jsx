@@ -41,14 +41,11 @@ function App() {
           element={<InvoiceProcessing />}
         />
         <Route exact path="/po-form" element={<POForm />} />
-        <Route exact path="/query-tab" element={<QueryForm />} />
+        {/* <Route exact path="/query-tab" element={<QueryForm />} /> */}
         <Route exact path="/cm-form" element={<CustomerMasterForm />} />
         <Route exact path="/pm-form" element={<PartMaster />} />
         <Route exact path="/inw-form" element={<Inw_Del_Challan />} />
         <Route exact path="/home" element={<Home />} />
-        {/* <Route element={<ProtectedRoutes />}>
-          <Route path="/home" element={<Home />} />
-        </Route> */}
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/reports-printing" element={<ReportsPrinting />} />
         <Route exact path="/invoice-printing" element={<InvoicePrinting />} />

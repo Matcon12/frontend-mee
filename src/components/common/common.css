@@ -1,0 +1,18 @@
+.app-error_screen {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.app-error_screen .code {
+    font-size: 42px;
+}
+
+.app-error_screen h1 {
+    margin: 0;
+    font-size: 44px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

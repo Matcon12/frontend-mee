@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../app.css'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import matlogo from '../images/matlogo.png';
+import ErrorScreen from './common/ErrorScreen';
 
 
 function Login() {
+  
+  const isAuth = localStorage.getItem("user") ? true : false;
 
   const [values, setValues] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -25,6 +28,7 @@ function Login() {
         .then((response) => {
           console.log('POST request successful', response);
           if (response.data == 'successful') {
+            localStorage.setItem("user", values['uname']);
             navigate('/home');
           } else if (response.data == 'incorrect') {
             alert('Username or password is incorrect')
@@ -37,6 +41,7 @@ function Login() {
     setSubmitted(false);
   }, [values, submitted]);
 
+  if (isAuth) return <ErrorScreen errorCode={403} errorTitle={'Access Denied'} errorMessage={"You can't access the login page if you are already logged in"} />
 
   return (
     <div className='app'>

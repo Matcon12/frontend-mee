@@ -6,9 +6,10 @@ import Header from "./common/Header";
 import ProtectedRoutes from "../herlpers/ProtectedRoutes";
 
 const Home = () => {
+  const isAuth = localStorage.getItem("user") ? true : false;
 
   return (
-    <ProtectedRoutes>
+    <ProtectedRoutes isAuth={isAuth}>
       <div className="homepage">
         <Header />
         <form>
@@ -25,9 +26,9 @@ const Home = () => {
           <Link to="/reports-printing">
             <button className="button">Reports Printing</button>
           </Link>
-          <Link to="/query-tab">
+          {/* <Link to="/query-tab">
             <button className="button"> Queries </button>
-          </Link>
+          </Link> */}
         </form>
       </div>
     </ProtectedRoutes>

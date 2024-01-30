@@ -12,6 +12,7 @@ const Header = () => {
 
     const handleLogout = (e) => {
         e.preventDefault();
+        localStorage.removeItem("user");
         setOut(true);
     };
 
