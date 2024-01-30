@@ -91,3 +91,13 @@ button {
   margin-top: 15px;
   margin-bottom: 30px;
 }
+
+.link-btn {
+  background: #379DF1;
+  color: white;
+  border-radius: 12px;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  margin-top: 10px;
+}

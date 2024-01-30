@@ -9,7 +9,7 @@ const Home = () => {
   const isAuth = localStorage.getItem("user") ? true : false;
 
   return (
-    <ProtectedRoutes isAuth={isAuth}>
+    // <ProtectedRoutes isAuth={isAuth}>
       <div className="homepage">
         <Header />
         <form>
@@ -31,7 +31,7 @@ const Home = () => {
           </Link> */}
         </form>
       </div>
-    </ProtectedRoutes>
+    // </ProtectedRoutes>
   );
 };
 

@@ -26,6 +26,7 @@ import PartReport from "./components/PartReport";
 import CustomerReport from "./components/CustomerReport";
 import ProtectedRoutes from "./herlpers/ProtectedRoutes";
 import { useEffect } from "react";
+import ProtectedLayout from "./layouts/ProtectedLayout";
 
 function App() {
   const isAuth = localStorage.getItem("user") ? true : false;
@@ -34,36 +35,36 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route exact path="/" element={<Login />} />
-        <Route exact path="/data-entry" element={<DataEntry />} />
+        <Route exact path="/register" element={<Register />} />
+        <Route exact path="/home" element={<ProtectedLayout><Home /></ProtectedLayout>} />
+        <Route exact path="/data-entry" element={<ProtectedLayout><DataEntry /></ProtectedLayout>} />
         <Route
           exact
           path="/invoice-processing"
-          element={<InvoiceProcessing />}
+          element={<ProtectedLayout><InvoiceProcessing /></ProtectedLayout> }
         />
-        <Route exact path="/po-form" element={<POForm />} />
+        <Route exact path="/po-form" element={<ProtectedLayout><POForm /></ProtectedLayout>} />
         {/* <Route exact path="/query-tab" element={<QueryForm />} /> */}
-        <Route exact path="/cm-form" element={<CustomerMasterForm />} />
-        <Route exact path="/pm-form" element={<PartMaster />} />
-        <Route exact path="/inw-form" element={<Inw_Del_Challan />} />
-        <Route exact path="/home" element={<Home />} />
-        <Route exact path="/register" element={<Register />} />
-        <Route exact path="/reports-printing" element={<ReportsPrinting />} />
-        <Route exact path="/invoice-printing" element={<InvoicePrinting />} />
-        <Route exact path="/dc-printing" element={<DCPrinting />} />
-        <Route exact path="/invoice-reports" element={<InvoiceReports />} />
-        <Route exact path="/invoice-input" element={<InvoiceInput />} />
-        <Route exact path="/dc-input" element={<DcInput />} />
+        <Route exact path="/cm-form" element={<ProtectedLayout><CustomerMasterForm /></ProtectedLayout>} />
+        <Route exact path="/pm-form" element={<ProtectedLayout><PartMaster /></ProtectedLayout>} />
+        <Route exact path="/inw-form" element={<ProtectedLayout><Inw_Del_Challan /></ProtectedLayout>} />
+        <Route exact path="/reports-printing" element={<ProtectedLayout><ReportsPrinting /></ProtectedLayout>} />
+        <Route exact path="/invoice-printing" element={<ProtectedLayout><InvoicePrinting /></ProtectedLayout>} />
+        <Route exact path="/dc-printing" element={<ProtectedLayout><DCPrinting /></ProtectedLayout>} />
+        <Route exact path="/invoice-reports" element={<ProtectedLayout><InvoiceReports /></ProtectedLayout>} />
+        <Route exact path="/invoice-input" element={<ProtectedLayout><InvoiceInput /></ProtectedLayout>} />
+        <Route exact path="/dc-input" element={<ProtectedLayout><DcInput /></ProtectedLayout>} />
         <Route
           exact
           path="/rejected-processing"
-          element={<RejectedProcessing />}
+          element={<ProtectedLayout><RejectedProcessing /></ProtectedLayout>}
         />
-        <Route exact path="/po-form-items" element={<POFormItems />} />
-        <Route exact path="/inw-items" element={<Inw_Del_Items />} />
-        <Route exact path="/po-report" element={<PoReport />} />
-        <Route exact path="/inward-dc-report" element={<InwardDCReport />} />
-        <Route exact path="/part-report" element={<PartReport />} />
-        <Route exact path="/customer-report" element={<CustomerReport />} />
+        <Route exact path="/po-form-items" element={<ProtectedLayout><POFormItems /></ProtectedLayout>} />
+        <Route exact path="/inw-items" element={<ProtectedLayout><Inw_Del_Items /></ProtectedLayout>} />
+        <Route exact path="/po-report" element={<ProtectedLayout><PoReport /></ProtectedLayout>} />
+        <Route exact path="/inward-dc-report" element={<ProtectedLayout><InwardDCReport /></ProtectedLayout>} />
+        <Route exact path="/part-report" element={<ProtectedLayout><PartReport /></ProtectedLayout>} />
+        <Route exact path="/customer-report" element={<ProtectedLayout><CustomerReport /></ProtectedLayout>} />
       </Routes>
     </BrowserRouter>
   );
