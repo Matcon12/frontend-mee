@@ -26,7 +26,8 @@ function InvoiceProcessing() {
 
 
   const handleQtyChange = (e) => {
-    setQty(parseInt(e.target.value, 10));
+    var items = document.getElementsByName("no_of_items")[0]?.value;
+    setQty(items);
   };
 
   const handleChangeGRN = (e) => {
@@ -89,10 +90,10 @@ function InvoiceProcessing() {
     event.preventDefault();
 
     newFormData["rejected"] = 0;
-    newFormData["mcc"] = document.getElementsByName("mcc")[0].value;
-    newFormData["grn_no"] = document.getElementsByName("inw")[0].value;
-    newFormData["items"] = document.getElementsByName("no_of_items")[0].value;
-    newFormData["new_cons_id"] = document.getElementsByName("new_cons_id")[0].value;
+    newFormData["mcc"] = document.getElementsByName("mcc")[0]?.value;
+    newFormData["grn_no"] = document.getElementsByName("inw")[0]?.value;
+    newFormData["items"] = document.getElementsByName("no_of_items")[0]?.value;
+    newFormData["new_cons_id"] = document.getElementsByName("new_cons_id")[0]?.value;
     
 
     var obj;
@@ -101,8 +102,8 @@ function InvoiceProcessing() {
       const key = `item${i}`;
 
       obj = {
-        po_sl_no: document.getElementsByName(`Po_slno_${i}`)[0].value,
-        qty_delivered: document.getElementsByName(`items_${i}`)[0].value,
+        po_sl_no: document.getElementsByName(`Po_slno_${i}`)[0]?.value,
+        qty_delivered: document.getElementsByName(`items_${i}`)[0]?.value,
       };
 
       newFormData[key] = obj;
@@ -199,8 +200,7 @@ function InvoiceProcessing() {
 
     // Check if both GRN and PO_SL_NO are entered
     const grn_no = document.getElementsByName("inw")[0]?.value;
-    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
-      ?.value;
+    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
 
     // if (grn_no && po_sl_no) {
     //   try {
