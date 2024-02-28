@@ -30,13 +30,79 @@ function InvoiceProcessing() {
     setQty(items);
   };
 
-  const handleChangeGRN = (e) => {
+  // Modified by TJ
+
+{/*  const handleChangeGRN = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
+*/}
+
+
+  const handleChangeGRN = async(e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:5000/get-inw-details/${value}/`
+      );
+      const inwDetails = response.data;
+
+      setValues((prevValues) => ({
+        ...prevValues,
+        grn_date: inwDetails.grn_date,
+        po_no: inwDetails.po_no,
+        po_date: inwDetails.po_date,
+        cust_id: inwDetails.cust_id,
+        cons_id: inwDetails.consignee_id,
+      }));
+
+
+      try {
+        const custId = inwDetails.cust_id;
+        const consId = inwDetails.consignee_id;
+
+        const [responseCust, responseCons] = await Promise.all([
+          axios.get(`http://127.0.0.1:5000/get-CN/${custId}`),
+          axios.get(`http://127.0.0.1:5000/get-CN/${consId}`)
+        ]);
+
+        const custName = responseCust.data.cust_name;
+        const consName = responseCons.data.cust_name;  
+
+        setValues((prevValues) => ({
+          ...prevValues,
+          cust_name: custName,
+          consignee_id: consName,
+        }));
+      } catch (error) {
+        console.error("Error fetching cust_name:", error);
+      }
+
+      console.log("After axios request. Inw DC details:", inwDetails);
+    } catch (error) {
+      setValues((prevValues) => ({
+        ...prevValues,
+        grn_date: "",
+        po_no: "",
+        po_date: "",
+        cust_id: "",
+        cust_name: "",
+        consignee_id:"",
+      }));
+      console.error("Error getting PO details", error);
+      console.log("URL causing the 404 error:", error.config.url);
+    }
+  };
+// End of Modification by TJ
+
+
   const [formData, setFormData] = useState({
     items: Array(qty).fill({
       po_sl_no: "",
