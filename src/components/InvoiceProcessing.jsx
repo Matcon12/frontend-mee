@@ -16,14 +16,13 @@ function InvoiceProcessing() {
   const [Mcc, setMcc] = useState("MEE");
   const [partDetails, setPartDetails] = useState([]);
   const [poNo, setPoNo] = useState("");
- 
+
   const [consigneeId, setConsigneeId] = useState("");
   const [values, setValues] = useState({
     cust_name: "",
     po_no: "",
     consignee_id: "",
   });
-
 
   const handleQtyChange = (e) => {
     var items = document.getElementsByName("no_of_items")[0]?.value;
@@ -32,17 +31,18 @@ function InvoiceProcessing() {
 
   // Modified by TJ
 
-{/*  const handleChangeGRN = (e) => {
+  {
+    /*  const handleChangeGRN = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
-*/}
+*/
+  }
 
-
-  const handleChangeGRN = async(e) => {
+  const handleChangeGRN = async (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -50,7 +50,7 @@ function InvoiceProcessing() {
     }));
     try {
       const response = await axios.get(
-        `http://127.0.0.1:5000/get-inw-details/${value}/`
+        `http://52.90.227.20:8080/get-inw-details/${value}/`
       );
       const inwDetails = response.data;
 
@@ -63,18 +63,17 @@ function InvoiceProcessing() {
         cons_id: inwDetails.consignee_id,
       }));
 
-
       try {
         const custId = inwDetails.cust_id;
         const consId = inwDetails.consignee_id;
 
         const [responseCust, responseCons] = await Promise.all([
-          axios.get(`http://127.0.0.1:5000/get-CN/${custId}`),
-          axios.get(`http://127.0.0.1:5000/get-CN/${consId}`)
+          axios.get(`http://52.90.227.20:8080/get-CN/${custId}`),
+          axios.get(`http://52.90.227.20:8080/get-CN/${consId}`),
         ]);
 
         const custName = responseCust.data.cust_name;
-        const consName = responseCons.data.cust_name;  
+        const consName = responseCons.data.cust_name;
 
         setValues((prevValues) => ({
           ...prevValues,
@@ -94,14 +93,13 @@ function InvoiceProcessing() {
         po_date: "",
         cust_id: "",
         cust_name: "",
-        consignee_id:"",
+        consignee_id: "",
       }));
       console.error("Error getting PO details", error);
       console.log("URL causing the 404 error:", error.config.url);
     }
   };
-// End of Modification by TJ
-
+  // End of Modification by TJ
 
   const [formData, setFormData] = useState({
     items: Array(qty).fill({
@@ -159,8 +157,8 @@ function InvoiceProcessing() {
     newFormData["mcc"] = document.getElementsByName("mcc")[0]?.value;
     newFormData["grn_no"] = document.getElementsByName("inw")[0]?.value;
     newFormData["items"] = document.getElementsByName("no_of_items")[0]?.value;
-    newFormData["new_cons_id"] = document.getElementsByName("new_cons_id")[0]?.value;
-    
+    newFormData["new_cons_id"] =
+      document.getElementsByName("new_cons_id")[0]?.value;
 
     var obj;
 
@@ -266,7 +264,8 @@ function InvoiceProcessing() {
 
     // Check if both GRN and PO_SL_NO are entered
     const grn_no = document.getElementsByName("inw")[0]?.value;
-    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
+    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
+      ?.value;
 
     // if (grn_no && po_sl_no) {
     //   try {
@@ -308,24 +307,22 @@ function InvoiceProcessing() {
     //   }
     // }
 
-
     if (grn_no) {
       try {
         const response = await axios.get(
           `http://52.90.227.20:8080/get-inw-details/${grn_no}/`
         );
-  
+
         const inwDetailsResponse = response.data;
-  
+
         setValues((prevValues) => ({
           ...prevValues,
           po_no: inwDetailsResponse.po_no,
-          
         }));
         setConsigneeId(response.data.consignee_id);
-        const consignee_id= inwDetailsResponse.consignee_id;
+        const consignee_id = inwDetailsResponse.consignee_id;
 
-        const cons_name= await axios.get(
+        const cons_name = await axios.get(
           `http://52.90.227.20:8080/get-CN/${consignee_id}/`
         );
 
@@ -334,27 +331,24 @@ function InvoiceProcessing() {
           ...prevValues,
           consignee_id: consignee_name,
         }));
-  
+
         const custId = inwDetailsResponse.cust_id;
-        
+
         const responseCust = await axios.get(
           `http://52.90.227.20:8080/get-CN/${custId}/`
         );
         const custName = responseCust.data.cust_name;
-  
+
         setValues((prevValues) => ({
           ...prevValues,
           cust_name: custName,
         }));
 
-
-  
         console.log("After axios request. Inw DC details:", inwDetailsResponse);
-         
 
-        const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
-       
-  
+        const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
+          ?.value;
+
         if (po_sl_no) {
           try {
             const response = await axios.get(
@@ -363,13 +357,13 @@ function InvoiceProcessing() {
             const partDetails = response.data;
             console.log("partDetails");
             console.log(partDetails, "partDetails");
-  
+
             setPartDetails((prevDetails) => {
               const updatedDetails = [...prevDetails];
               updatedDetails[itemIndex] = partDetails;
               return updatedDetails;
             });
-  
+
             setFormData((prevData) => {
               const updatedItems = prevData?.items?.map((item, index) => {
                 if (index === itemIndex) {
@@ -383,7 +377,7 @@ function InvoiceProcessing() {
                 }
                 return item;
               });
-  
+
               return {
                 ...prevData,
                 items: updatedItems,
@@ -403,7 +397,6 @@ function InvoiceProcessing() {
   const handleConsigneeIdChange = (e) => {
     setConsigneeId(e.target.value);
   };
-
 
   return (
     <div className="app">
@@ -453,20 +446,11 @@ function InvoiceProcessing() {
             name="cust_id"
             value={values.consignee_id}
             onChange={handleConsigneeIdChange}
-           
           />
-           <label>Enter New Consignee ID (if required)</label>
-          <input
-            type="text"
-            name="new_cons_id"
-            maxLength={4}
-          />
+          <label>Enter New Consignee ID (if required)</label>
+          <input type="text" name="new_cons_id" maxLength={4} />
           <label>Total PO Sl No items</label>
-          <input
-            type="number"
-            name="no_of_items"
-            onChange={handleQtyChange}
-          />
+          <input type="number" name="no_of_items" onChange={handleQtyChange} />
           <div>{generateFormFields()}</div>
           <button onClick={handleSubmit}>Submit</button>
         </div>
