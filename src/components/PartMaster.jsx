@@ -18,9 +18,9 @@ function PartMaster() {
     event.preventDefault();
     const newFormData = {};
 
+    newFormData["cust_id"] = document.getElementsByName("cust_id")[0].value;
     newFormData["part_id"] = document.getElementsByName("part_id")[0].value;
     newFormData["part_name"] = document.getElementsByName("part_name")[0].value;
-    newFormData["cust_id"] = document.getElementsByName("cust_id")[0].value;
 
     console.log(newFormData);
     setFormData(newFormData);
@@ -44,8 +44,8 @@ function PartMaster() {
 
           if (error.response.data["cust_id"]) {
             alert("Please enter a valid customer id");
-          } else if (error.response.data["part_id"]) {
-            alert("This part id already exists");
+          } else {   //if (error.response.data["part_id"]) {
+            alert("This PART-ID for this CUSTOMER already exists");
           }
         });
     }
@@ -79,12 +79,12 @@ function PartMaster() {
       <form>
         <h1>Part Details</h1>
         <div className="formInput">
+          <label>Customer ID</label>
+          <input type="text" name="cust_id" />
           <label>Part Code</label>
           <input type="text" name="part_id" />
           <label>Part Name</label>
           <input type="text" name="part_name" />
-          <label>Customer ID</label>
-          <input type="text" name="cust_id" />
           <button onClick={handleSubmit}>Submit</button>
         </div>
       </form>
