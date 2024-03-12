@@ -99,7 +99,7 @@ function POFormItems() {
           console.error("Error making POST request", error.response.data);
 
           if (error.response.data["non_field_errors"]) {
-            alert("An item with the same po no and po sl no exists");
+            alert("Item with this PO No. & PO Sl No. already exists");
           }
         });
     }
@@ -146,7 +146,7 @@ function POFormItems() {
       console.log(values);
       console.log(values.total_price);
     } else {
-      alert("Selected part_id is not related to the current customer");
+      alert("Invalid PART-ID for this CUSTOMER-ID");
     }
   };
   const [out, setOut] = useState(false);
