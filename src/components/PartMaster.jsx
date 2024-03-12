@@ -43,9 +43,9 @@ function PartMaster() {
           );
 
           if (error.response.data["cust_id"]) {
-            alert("Please enter a valid customer id");
+            alert("Please enter a valid CUSTOMER-ID");
           } else {   //if (error.response.data["part_id"]) {
-            alert("This PART-ID for this CUSTOMER already exists");
+            alert("Invalid PART-ID or PART NAME");
           }
         });
     }

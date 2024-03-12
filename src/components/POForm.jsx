@@ -38,6 +38,7 @@ function POForm() {
       name: "po_date",
       type: "date",
       label: "PO Date",
+      required: true,
     },
 
     {
@@ -76,7 +77,7 @@ function POForm() {
     setQty(nos);
 
     if (values.cust_id.length != 4) {
-      alert("Enter customer id length equal to 4 digits");
+      alert("Enter 4 character Customer-ID");
     } else {
       values["open_po"] = document.getElementsByName("open_po")[0]?.value;
       values["open_po_validity"] =
