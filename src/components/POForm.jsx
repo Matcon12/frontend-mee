@@ -1,15 +1,62 @@
-import React from "react";
-import { useState } from "react";
-import FormInput from "./FormInput";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
-import "./formInput.css";
-import matlogo from "../images/matlogo.png";
-import { redirect, useNavigate } from "react-router-dom";
-import home from "../images/home-button.png";
-import { Link } from "react-router-dom";
-import back from "../images/undo.png";
+import FormInput from "./FormInput";
+import { useNavigate } from "react-router-dom";
 import Header from "./common/Header";
+
+const inputs = [
+  {
+    id: 5,
+    name: "cust_id",
+    type: "text",
+    label: "Customer ID",
+    required: true,
+    maxLength: 4,
+  },
+  {
+    id: 1,
+    name: "po_no",
+    type: "string",
+    label: "PO Number",
+    required: true,
+  },
+  {
+    id: 2,
+    name: "po_date",
+    type: "date",
+    label: "PO Date",
+    required: true,
+  },
+
+  {
+    id: 6,
+    name: "quote_ref_no",
+    type: "text",
+    label: "Quote Ref Number",
+  },
+  {
+    id: 7,
+    name: "receiver_id",
+    type: "text",
+    label: "Receiver ID",
+    required: true,
+  },
+
+  {
+    id: 8,
+    name: "consignee_id",
+    type: "text",
+    label: "Consignee ID",
+    required: true,
+  },
+  {
+    id: 9,
+    name: "total_items",
+    type: "number",
+    label: "Total PO Sl No Items",
+    required: true,
+  },
+];
 
 function POForm() {
   const [values, setValues] = useState({});
@@ -17,85 +64,34 @@ function POForm() {
   const navigate = useNavigate();
   const [qty, setQty] = useState(0);
 
-  const inputs = [
-    {
-      id: 5,
-      name: "cust_id",
-      type: "text",
-      label: "Customer ID",
-      required: true,
-      maxLength: 4,
-    },
-    {
-      id: 1,
-      name: "po_no",
-      type: "string",
-      label: "PO Number",
-      required: true,
-    },
-    {
-      id: 2,
-      name: "po_date",
-      type: "date",
-      label: "PO Date",
-      required: true,
-    },
-
-    {
-      id: 6,
-      name: "quote_ref_no",
-      type: "text", 
-      label: "Quote Ref Number",
-    },
-    {
-      id: 7,
-      name: "receiver_id",
-      type: "text",
-      label: "Receiver ID",
-      required: true,
-    },
-
-    {
-      id: 8,
-      name: "consignee_id",
-      type: "text",
-      label: "Consignee ID",
-      required: true,
-    },
-    {
-      id: 9,
-      name: "total_items",
-      type: "number",
-      label: "Total PO Sl No Items",
-      required: true,
-    },
-  ];
-
   const handleSubmit = (event) => {
     event.preventDefault();
     var nos = document.getElementsByName("total_items")[0]?.value;
     setQty(nos);
+    console.log("Nos : ",nos,"QTY : ",qty);
 
+    values["open_po"] = document.getElementsByName("open_po")[0]?.value;
+    values["open_po_validity"] =
+      document.getElementsByName("open_po_validity")[0]?.value;
+
+    if (nos < 1) {
+      alert("Minimum 1 item required");
+      return;
+    } 
     if (values.cust_id.length != 4) {
       alert("Enter 4 character Customer-ID");
-    } else {
-      values["open_po"] = document.getElementsByName("open_po")[0]?.value;
-      values["open_po_validity"] =
-        document.getElementsByName("open_po_validity")[0]?.value;
+      return;
+    } 
+    navigate(`/po-form-items?qty=${nos}`, { state: { ...values } });
 
-      console.log(values);
-      console.log(nos);
-      navigate(`/po-form-items?qty=${nos}`, { state: { ...values } });
-
-      setSubmitted(true);
-    }
+    setSubmitted(true);
   };
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-
     const { name, value } = e.target;
-
+    setValues({ ...values, [name]: value });
+    console.log("values",values);
+    
     // Set receiver_id and consignee_id to cust_id when cust_id is changed
     if (name === "cust_id") {
       setValues((prevValues) => ({
@@ -149,7 +145,7 @@ function POForm() {
     <div className="app">
       <Header />
       <div className="container">
-        <img src={matlogo} alt="MatconLogo" className="logo" />
+{/*        <img src={matlogo} alt="MatconLogo" className="logo" />*/}
       </div>
       <form onSubmit={handleSubmit}>
         <h1>Purchase Order</h1>
@@ -171,6 +167,7 @@ function POForm() {
             label="Open PO Validity"
             type="date"
             name="open_po_validity"
+            required
           />
         )}
         <br></br>

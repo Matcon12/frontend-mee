@@ -1,10 +1,10 @@
+
 import React from "react";
-import { useLocation } from "react-router-dom";
-import home from "../images/home-button.png";
-import matlogo from "../images/matlogo.png";
-import { Link } from "react-router-dom";
-import back from "../images/undo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+//import home from "../images/home-button.png";
+//import matlogo from "../images/matlogo.png";
+//import { Link } from "react-router-dom";
+//import back from "../images/undo.png";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FormInput from "./FormInput";
@@ -13,7 +13,7 @@ import Header from "./common/Header";
 function POFormItems() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const no_of_items = queryParams.get("qty");
+  const no_of_items = parseInt(queryParams.get("qty"));
   const [values, setValues] = useState(location.state);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function POFormItems() {
       name: "po_sl_no",
       type: "number",
       label: "PO Sl No",
-      min: "0",
+      min: 0,
       oninput: "validity.valid||(value='');",
       required: true,
     },
@@ -42,8 +42,7 @@ function POFormItems() {
       name: "qty",
       type: "number",
       label: "Quantity",
-      min: "0",
-      oninput: "validity.valid||(value='');",
+      oninput: "validity.valid||(value=0);",
       required: true,
     },
     {
@@ -51,6 +50,7 @@ function POFormItems() {
       name: "uom",
       type: "text",
       label: "Unit of Measurement",
+      default: "No",
       required: true,
     },
     {
@@ -58,8 +58,7 @@ function POFormItems() {
       name: "unit_price",
       type: "number",
       label: "Unit Price",
-      min: "0",
-      oninput: "validity.valid||(value='');",
+      oninput: "validity.valid||(value=0);",
       required: true,
     },
 
@@ -77,11 +76,11 @@ function POFormItems() {
       axios
         .post("http://52.90.227.20:8080/purchase-order-input/", values)
         .then((response) => {
-          if (counter == no_of_items) {
+          if (counter === no_of_items) {
             alert("All items saved successfully");
             navigate("/home");
           } else if (counter < no_of_items) {
-            alert("Data saved successfully");
+            alert(`Data for Item-${counter} saved successfully`);
           }
           setCounter(counter + 1);
           setValues({
@@ -108,7 +107,6 @@ function POFormItems() {
 
   const onChange = async (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-
     const { name, value } = e.target;
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
 
@@ -127,7 +125,7 @@ function POFormItems() {
         setValues((prevValues) => ({ ...prevValues, part_name: partName }));
         console.log("After axios request. part_name:", partName);
       } catch (error) {
-        console.error("Error getting part name", error);
+        console.error("Error getting Part Name", error);
         setValues((prevValues) => ({ ...prevValues, part_name: "" }));
       }
     }
@@ -136,15 +134,25 @@ function POFormItems() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var price = document.getElementsByName("unit_price")[0]?.value;
-    var nos = document.getElementsByName("qty")[0]?.value;
+    var price = parseFloat(document.getElementsByName("unit_price")[0]?.value);
+    var nos = parseInt(document.getElementsByName("qty")[0]?.value);
+    if (nos === 0 && values.open_po === "false") {
+      alert("Quantity cannot be Zero");
+      return;
+    }
+    if (price === 0) {
+      alert("Unit Price cannot be zero");
+      return; 
+    }    
     setTotal(price * nos);
     values["total_price"] = Math.round((price * nos).toFixed(2));
 
+    if (values.po_sl_no < 1) {
+      alert("Enter a valid PO Sl No");
+      return;
+    }
     if (values.part_name) {
       setSubmitted(true);
-      console.log(values);
-      console.log(values.total_price);
     } else {
       alert("Invalid PART-ID for this CUSTOMER-ID");
     }
@@ -174,7 +182,7 @@ function POFormItems() {
   return (
     <div className="app">
       <Header />
-      <form>
+      <form onSubmit={handleSubmit}>   
         <h1>Item {counter}</h1>
         {inputs.map((input) =>
           input.readOnly ? (
@@ -202,7 +210,7 @@ function POFormItems() {
         )}
         <label>Total Price</label>
         <h3>{total}</h3>
-        <button onClick={handleSubmit}>Submit</button>
+        <button type="submit">Submit</button>        
       </form>
     </div>
   );

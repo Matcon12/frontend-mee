@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
-import matlogo from "../images/matlogo.png";
+//import matlogo from "../images/matlogo.png";
 import { Link, useNavigate } from "react-router-dom";
-import home from "../images/home-button.png";
-import back from "../images/undo.png";
+//import home from "../images/home-button.png";
+//import back from "../images/undo.png";
 import Header from "./common/Header";
 
 function Inw_Del_Challan() {
@@ -35,6 +35,7 @@ function Inw_Del_Challan() {
       type: "text",
       label: "Customer ID",
       required: true,
+      readOnly: true,
     },
     {
       id: 7,
@@ -42,6 +43,7 @@ function Inw_Del_Challan() {
       type: "text",
       label: "Receiver ID",
       required: true,
+      readOnly: true,
     },
     {
       id: 8,
@@ -86,12 +88,15 @@ function Inw_Del_Challan() {
       alert("Inward DC Date should not be less than PO Date");
       return;
     }
-    var nos = document.getElementsByName("total_items")[0]?.value;
+    var nos = parseInt(document.getElementsByName("total_items")[0]?.value);
     setQty(nos);
-    console.log(values);
-    console.log(nos);
+    console.log("Values:", values);
+    console.log("Nos:", nos);
+    if (nos < 1) {
+      alert("Minimum 1 Item required");
+      return;
+    }
     navigate(`/inw-items?qty=${nos}`, { state: { ...values } });
-
     setSubmitted(true);
   };
 

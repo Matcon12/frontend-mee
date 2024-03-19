@@ -190,15 +190,15 @@ function InvoiceProcessing() {
             navigate("/home");
           } else {
             if (response.data === "zero items") {
-              alert("Nothing to be delivered");
+              alert("Insufficient Stock for this delivery");
             } else if (response.data === "grn_no") {
-              alert("The inw_dc challan no does not exist");
+              alert("This Inward DC does not exist");
             } else if (response.data.slice(0, 8) === "po_sl_no") {
               alert(
-                "The item does not have a po_sl_no " + response.data.slice(8)
+                "Item does not have a PO Sl. No. " + response.data.slice(8)
               );
             } else if (response.data === "open_po") {
-              alert("The open po has expired, check the validity");
+              alert("Expired Open PO:  Please re-issue/re-validate");
             }
           }
         })
