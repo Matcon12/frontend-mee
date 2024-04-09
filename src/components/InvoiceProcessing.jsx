@@ -4,7 +4,7 @@ import "./formInput.css";
 import axios from "axios";
 import matlogo from "../images/matlogo.png";
 import home from "../images/home-button.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import back from "../images/undo.png";
 
@@ -16,6 +16,14 @@ function InvoiceProcessing() {
   const [Mcc, setMcc] = useState("MEE");
   const [partDetails, setPartDetails] = useState([]);
   const [poNo, setPoNo] = useState("");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const rejectedFlag = queryParams.get('rejected_flag');
+
+  useEffect(() => {
+    console.log('Rejected Flag:', rejectedFlag);
+  }, [rejectedFlag]);
+  const title = rejectedFlag === "1" ? "DC for Rejected Goods" : "Invoice & DC Processing";    
 
   const [consigneeId, setConsigneeId] = useState("");
   const [values, setValues] = useState({
@@ -109,7 +117,7 @@ function InvoiceProcessing() {
       part_name: "",
       unit_price: "",
     }),
-    rejected: 0,
+    rejected: rejectedFlag,
     mcc: "MEE",
     grn_no: "",
   });
@@ -153,7 +161,7 @@ function InvoiceProcessing() {
 
     event.preventDefault();
 
-    newFormData["rejected"] = 0;
+    newFormData["rejected"] = rejectedFlag;
     newFormData["mcc"] = document.getElementsByName("mcc")[0]?.value;
     newFormData["grn_no"] = document.getElementsByName("inw")[0]?.value;
     newFormData["items"] = document.getElementsByName("no_of_items")[0]?.value;
@@ -416,7 +424,7 @@ function InvoiceProcessing() {
         </Link>
       </div>
       <form>
-        <h1>Invoice/DC Processing</h1>
+        <h1>{title}</h1>
         <div className="formInput">
           <label>Matcon Company Code</label>
           <select

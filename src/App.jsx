@@ -1,4 +1,5 @@
 import "./app.css";
+import React from 'react';
 import FormInput from "./components/FormInput";
 import CustomerMasterForm from "./components/CustomerMasterForm";
 import POForm from "./components/POForm";
@@ -38,11 +39,11 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/home" element={<ProtectedLayout><Home /></ProtectedLayout>} />
         <Route exact path="/data-entry" element={<ProtectedLayout><DataEntry /></ProtectedLayout>} />
-        <Route
-          exact
-          path="/invoice-processing"
-          element={<ProtectedLayout><InvoiceProcessing /></ProtectedLayout> }
-        />
+        <Route exact path="/invoice-processing" element={<InvoiceProcessing rejectedFlag={0} />} />
+        <Route exact path="/rejected-processing" element={<InvoiceProcessing rejectedFlag={1} />} />
+        {/*<Route exact path="/invoice-processing" 
+            element={<ProtectedLayout><InvoiceProcessing /></ProtectedLayout> }
+        />*/}
         <Route exact path="/po-form" element={<ProtectedLayout><POForm /></ProtectedLayout>} />
         {/* <Route exact path="/query-tab" element={<QueryForm />} /> */}
         <Route exact path="/cm-form" element={<ProtectedLayout><CustomerMasterForm /></ProtectedLayout>} />
@@ -54,11 +55,11 @@ function App() {
         <Route exact path="/invoice-reports" element={<ProtectedLayout><InvoiceReports /></ProtectedLayout>} />
         <Route exact path="/invoice-input" element={<ProtectedLayout><InvoiceInput /></ProtectedLayout>} />
         <Route exact path="/dc-input" element={<ProtectedLayout><DcInput /></ProtectedLayout>} />
-        <Route
+        {/*<Route
           exact
           path="/rejected-processing"
           element={<ProtectedLayout><RejectedProcessing /></ProtectedLayout>}
-        />
+      /> */}
         <Route exact path="/po-form-items" element={<ProtectedLayout><POFormItems /></ProtectedLayout>} />
         <Route exact path="/inw-items" element={<ProtectedLayout><Inw_Del_Items /></ProtectedLayout>} />
         <Route exact path="/po-report" element={<ProtectedLayout><PoReport /></ProtectedLayout>} />

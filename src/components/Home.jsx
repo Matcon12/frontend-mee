@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from "react-router-dom";
 import "./formInput.css";
 import "../app.css";
@@ -17,12 +18,13 @@ const Home = () => {
           <Link to="/data-entry">
             <button className="button">Perform Data Entry</button>
           </Link>
-          <Link to="/invoice-processing">
+          <Link to="/invoice-processing?rejected_flag=0">
             <button className="button">Invoice Generation</button>
           </Link>
-          <Link to="/rejected-processing">
+          <Link to="/rejected-processing?rejected_flag=1">
             <button className="button">Delivery of Rejected Goods</button>
           </Link>
+
           <Link to="/reports-printing">
             <button className="button">Reports Printing</button>
           </Link>
