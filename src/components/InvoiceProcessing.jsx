@@ -348,7 +348,7 @@ function InvoiceProcessing() {
           po_no: inwDetailsResponse.po_no,
         }));
         setConsigneeId(response.data.consignee_id);
-        const consignee_id = inwDetailsResponse.consignee_id;
+        const consignee_id = consigneeId ? consigneeId : inwDetailsResponse.consignee_id;
 
         const cons_name = await axios.get(
           `http://52.90.227.20:8080/get-CN/${consignee_id}/`
