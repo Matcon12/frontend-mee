@@ -31,7 +31,7 @@ function InvoiceProcessing() {
     cust_id: "",
     cust_name: "",
     po_no: "",
-    consignee_id: "",
+    consignee_name: "",
   });
 
   const handleQtyChange = (e) => {
@@ -45,7 +45,7 @@ function InvoiceProcessing() {
     const custId = e.target.value;
     setValues((prevValues) => ({
       ...prevValues,
-      consignee_id: "",
+      consignee_name: "",
     }))
 
     if (custId) {
@@ -56,7 +56,7 @@ function InvoiceProcessing() {
         );
         setValues((prevValues) => ({
           ...prevValues,
-          consignee_id: response.data.cust_name,
+          consignee_name: response.data.cust_name,
         }));
       } catch (error) {
         alert("Invalid Consignee ID");
@@ -102,7 +102,7 @@ function InvoiceProcessing() {
         setValues((prevValues) => ({
           ...prevValues,
           cust_name: custName,
-          consignee_id: consName,
+          consignee_name: consName,
         }));
       } catch (error) {
         console.error("Error fetching cust_name:", error);
@@ -117,7 +117,7 @@ function InvoiceProcessing() {
         po_date: "",
         cust_id: "",
         cust_name: "",
-        consignee_id: "",
+        consignee_name: "",
       }));
       console.error("Error getting PO details", error);
       console.log("URL causing the 404 error:", error.config.url);
@@ -347,17 +347,17 @@ function InvoiceProcessing() {
           ...prevValues,
           po_no: inwDetailsResponse.po_no,
         }));
-        setConsigneeId(response.data.consignee_id);
-        const consignee_id = consigneeId ? consigneeId : inwDetailsResponse.consignee_id;
+        const consignee_id = consigneeId !== null ? consigneeId : inwDetailsResponse.consignee_id;
+        setConsigneeId(consignee_id);
 
         const cons_name = await axios.get(
           `http://52.90.227.20:8080/get-CN/${consignee_id}/`
         );
 
-        const consignee_name = cons_name.data.cust_name;
+        //const consignee_name = cons_name.data.cust_name;
         setValues((prevValues) => ({
           ...prevValues,
-          consignee_id: consignee_name,
+          consignee_name: cons_name.data.cust_name,
         }));
 
         const custId = inwDetailsResponse.cust_id;
@@ -469,7 +469,7 @@ function InvoiceProcessing() {
           <input
             type="text"
             name="cust_id"
-            value={values.consignee_id}
+            value={values.consignee_name}
             onBlur={handleConsigneeIdChange}
           />
           <label>Enter New Consignee ID (if required)</label>
