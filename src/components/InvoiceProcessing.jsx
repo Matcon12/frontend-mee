@@ -347,7 +347,7 @@ function InvoiceProcessing() {
           ...prevValues,
           po_no: inwDetailsResponse.po_no,
         }));
-        const consignee_id = consigneeId !== null ? consigneeId : inwDetailsResponse.consignee_id;
+        const consignee_id = consigneeId ? consigneeId : inwDetailsResponse.consignee_id;
         setConsigneeId(consignee_id);
 
         const cons_name = await axios.get(
