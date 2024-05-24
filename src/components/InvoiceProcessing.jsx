@@ -470,7 +470,8 @@ function InvoiceProcessing() {
             type="text"
             name="cust_id"
             value={values.consignee_name}
-            onBlur={handleConsigneeIdChange}
+            // onBlur={handleConsigneeIdChange}
+            readOnly
           />
           <label>Enter New Consignee ID (if required)</label>
           <input 
