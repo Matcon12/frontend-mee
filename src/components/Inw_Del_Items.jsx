@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
-//import matlogo from "../images/matlogo.png";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-//import home from "../images/home-button.png";
-//import back from "../images/undo.png";
-//import { useLocation } from "react-router-dom";
 import Header from "./common/Header";
 
 function Inw_Del_Items() {
@@ -112,16 +108,29 @@ function Inw_Del_Items() {
   }, [submitted]);
 
   const onChange = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-
     const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+
+    // Calculate new values
+    const newValues = { ...values, [name]: value };
+    const tot = newValues.qty_received * newValues.unit_price;
+    console.log("Qty:", newValues.qty_received);
+    console.log("Unit Price:", newValues.unit_price);
+    console.log("Total:", tot);
+
+    // Set state with the new values and the calculated total
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+      total_price: tot,
+    }));
+
+    setTotal(tot);
 
     if (name === "po_sl_no" && value) {
       try {
         console.log("Before axios request. po_sl_no:", value);
-        const poNo = values.po_no;
-        const cust_id = values.cust_id;
+        const poNo = newValues.po_no;
+        const cust_id = newValues.cust_id;
         console.log("po no ", poNo);
 
         try {
