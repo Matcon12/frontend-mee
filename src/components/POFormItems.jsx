@@ -101,14 +101,27 @@ function POFormItems() {
   }, [submitted]);
 
   const onChange = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
     const { name, value } = e.target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+
+    // Calculate new values
+    const newValues = { ...values, [name]: value };
+    const tot = newValues.qty * newValues.unit_price;
+    // Set state with the new values and the calculated total
+    setValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+      total_price: tot,
+    }));
+
+    setTotal(tot);
+    console.log("Qty:", newValues.qty);
+    console.log("Unit Price:", newValues.unit_price);
+    console.log("Total:",tot);
 
     if (name === "part_id" && value) {
       try {
         console.log("Before axios request. part_id:", value);
-        const custId = values.cust_id;
+        const custId = newValues.cust_id;
         console.log(custId, "cust id");
         const response = await axios.get(
           `http://52.90.227.20:8080/get-part-name/${value}/${custId}/`
@@ -125,7 +138,7 @@ function POFormItems() {
       }
     }
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
