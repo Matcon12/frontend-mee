@@ -132,6 +132,7 @@ function InvoiceProcessing() {
       part_id: "",
       part_name: "",
       unit_price: "",
+      tot_price: "",
     }),
     rejected: rejectedFlag,
     mcc: "MEE",
@@ -164,6 +165,7 @@ function InvoiceProcessing() {
               <p>Part ID: {partDetails[i].part_id}</p>
               <p>Part Name: {partDetails[i].part_name}</p>
               <p>Unit Price: {partDetails[i].unit_price}</p>
+              <p>Total Price: {partDetails[i].tot_price}</p>
             </div>
           )}
         </div>
@@ -193,7 +195,7 @@ function InvoiceProcessing() {
 
       obj = {
         po_sl_no: document.getElementsByName(`Po_slno_${i}`)[0]?.value,
-        qty_delivered: document.getElementsByName(`items_${i}`)[0]?.value,
+        qty_delivered: parseInt(document.getElementsByName(`items_${i}`)[0]?.value),
       };
 
       newFormData[key] = obj;
@@ -270,8 +272,13 @@ function InvoiceProcessing() {
   };
 
   const onChange = async (e, itemIndex) => {
-    console.log("Inside onChange",e.target);
     const { name, value } = e.target;
+
+    // Check if GRN, PO_SL_NO and Qty_delivered are entered
+    const grn_no = document.getElementsByName("inw")[0]?.value;
+    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
+    const qty_del = parseInt(document.getElementsByName(`items_${itemIndex}`)[0]?.value);
+    console.log("GRN:", grn_no, "PO_Sl_No:",po_sl_no,"Qty_del:",qty_del);
 
     setFormData((prevData) => {
       const updatedItems = prevData?.items?.map((item, i) => {
@@ -289,11 +296,6 @@ function InvoiceProcessing() {
         items: updatedItems,
       };
     });
-
-    // Check if both GRN and PO_SL_NO are entered
-    const grn_no = document.getElementsByName("inw")[0]?.value;
-    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
-      ?.value;
 
     // if (grn_no && po_sl_no) {
     //   try {
@@ -389,6 +391,7 @@ function InvoiceProcessing() {
             setPartDetails((prevDetails) => {
               const updatedDetails = [...prevDetails];
               updatedDetails[itemIndex] = partDetails;
+              updatedDetails[itemIndex].tot_price = updatedDetails[itemIndex].unit_price*qty_del;
               return updatedDetails;
             });
 
@@ -401,6 +404,7 @@ function InvoiceProcessing() {
                     part_id: partDetails.part_id,
                     part_name: partDetails.part_name,
                     unit_price: partDetails.unit_price,
+                    tot_price: partDetails.tot_price,
                   };
                 }
                 return item;
