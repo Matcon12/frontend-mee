@@ -36,7 +36,14 @@ function InvoiceProcessing() {
 
   const handleQtyChange = (e) => {
     var items = document.getElementsByName("no_of_items")[0]?.value;
-    setQty(items);
+    if (items < 1) {
+      console.log("Enter a Valid Quantity");
+      alert("Enter a Valid Quantity");
+      return;
+    }
+    else {
+      setQty(items);
+    }
   };
 
   // Modified by TJ
@@ -150,14 +157,14 @@ function InvoiceProcessing() {
           <input
             type="text"
             name={`Po_slno_${i}`}
-            onChange={(e) => onChange(e, i)}
+            onBlur={(e) => onChange(e, i)}
           />
 
           <label>Quantity to be Delivered</label>
           <input
             type="text"
             name={`items_${i}`}
-            onChange={(e) => onChange(e, i)}
+            onBlur={(e) => onChange(e, i)}
           />
 
           {partDetails[i] && (
@@ -376,9 +383,6 @@ function InvoiceProcessing() {
 
         console.log("After axios request. Inw DC details:", inwDetailsResponse);
 
-        const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
-          ?.value;
-
         if (po_sl_no) {
           try {
             const response = await axios.get(
@@ -387,6 +391,12 @@ function InvoiceProcessing() {
             const partDetails = response.data;
             console.log("partDetails");
             console.log(partDetails, "partDetails");
+
+            if (qty_del < 1) {
+              console.log("Quantity being delivered cannot be less than 1");
+              alert(`Invalid Quantity : ${qty_del}`);
+              return;
+            }
 
             setPartDetails((prevDetails) => {
               const updatedDetails = [...prevDetails];
@@ -417,11 +427,15 @@ function InvoiceProcessing() {
             });
           } catch (error) {
             console.error(`Error fetching details for ${name} ${value}`, error);
+            alert(`Invalid PO_Sl_No : ${po_sl_no}`);
+            return;
           }
         }
       } catch (error) {
-        console.error("Error getting PO details", error);
+        console.error("Error getting Inward DC details", error);
         console.log("URL causing the 404 error:", error.config.url);
+        alert(`Invalid Inward DC No. : ${grn_no}`);
+        return;
       }
     }
   };
@@ -485,7 +499,7 @@ function InvoiceProcessing() {
             onBlur={handleConsigneeIdChange}
           />
           <label>Total PO Sl No items</label>
-          <input type="number" name="no_of_items" onChange={handleQtyChange} />
+          <input type="number" name="no_of_items" onBlur={handleQtyChange} />
           <div>{generateFormFields()}</div>
           <button onClick={handleSubmit}>Submit</button>
         </div>
