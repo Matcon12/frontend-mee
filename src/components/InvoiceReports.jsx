@@ -24,9 +24,9 @@ function InvoiceReports() {
     setEndDate(e.target.value);
   };
 
-  const downloadInvoiceReport = (htmlString) => {
+  const downloadInvoiceReport = (htmlString, htmlWithStyles) => {
     // Create a Blob containing the HTML data
-    const blob = new Blob([htmlString], { type: "text/html" });
+    const blob = new Blob([htmlWithStyles], { type: "text/html" });
 
     // Create a new object URL
     const url = URL.createObjectURL(blob);
@@ -162,7 +162,7 @@ function InvoiceReports() {
         `;
 
           // Call the function to open the new window and provide download options
-          downloadInvoiceReport(htmlWithStyles);
+          downloadInvoiceReport(htmlString, htmlWithStyles);
         } else {
           console.error("No data available");
         }
