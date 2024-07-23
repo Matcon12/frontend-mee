@@ -10,7 +10,7 @@ function InvoicePrinting() {
 
 
   useEffect(() => {
-    const backendURL = 'http://52.90.227.20:8080/invoice-printing/';
+    const backendURL = 'http://3.90.115.255:8080/invoice-printing/';
 
     const data = {
       'gcn_no': gcn

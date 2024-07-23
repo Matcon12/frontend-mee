@@ -98,7 +98,7 @@ function Inw_Del_Challan() {
 
     try {
       const response = await axios.get(
-        `http://52.90.227.20:8080/get-po-details/${values.po_no}`);
+        `http://3.90.115.255:8080/get-po-details/${values.po_no}`);
       console.log(response.data);
     } catch (error) {
       alert("Invalid PO Number");
@@ -132,7 +132,7 @@ function Inw_Del_Challan() {
       try {
         console.log("Before axios request. po_no:", value);
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-po-details/${value}/`
+          `http://3.90.115.255:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
         setValues((prevValues) => ({
@@ -153,7 +153,7 @@ function Inw_Del_Challan() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -335,7 +335,7 @@ function Inw_Del_Challan() {
       try {
         console.log("Before axios request. po_no:", value);
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-po-details/${value}/`
+          `http://3.90.115.255:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
         setValues((prevValues) => ({
@@ -356,7 +356,7 @@ function Inw_Del_Challan() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

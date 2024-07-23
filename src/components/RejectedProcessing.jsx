@@ -66,7 +66,7 @@ function RejectedProcessing() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/invoice-processing/", formData)
+        .post("http://3.90.115.255:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response);
           if (response.data == "zero items") {
@@ -100,7 +100,7 @@ function RejectedProcessing() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successfull");

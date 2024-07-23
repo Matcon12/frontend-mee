@@ -24,7 +24,7 @@ function Login() {
 
   useEffect(() => {
     if (submitted) {
-      axios.post('http://52.90.227.20:8080/login/', values)
+      axios.post('http://3.90.115.255:8080/login/', values)
         .then((response) => {
           console.log('POST request successful', response);
           if (response.data == 'successful') {

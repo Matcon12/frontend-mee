@@ -78,7 +78,7 @@ function Inw_Del_Items() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/inward-dc-input/", values)
+        .post("http://3.90.115.255:8080/inward-dc-input/", values)
         .then((response) => {
           if (counter === no_of_items) {
             alert("All items saved successfully");
@@ -135,7 +135,7 @@ function Inw_Del_Items() {
 
         try {
           const response = await axios.get(
-            `http://52.90.227.20:8080/getAdditionalInfo/${poNo}/${value}/`
+            `http://3.90.115.255:8080/getAdditionalInfo/${poNo}/${value}/`
           );
           const poDetails = response.data;
 
@@ -147,7 +147,7 @@ function Inw_Del_Items() {
           }));
 
           const pn = await axios.get(
-            `http://52.90.227.20:8080/get-part-name/${poDetails.part_id}/${cust_id}/`
+            `http://3.90.115.255:8080/get-part-name/${poDetails.part_id}/${cust_id}/`
           );
           const partMasterData = pn.data;
 
@@ -184,7 +184,7 @@ function Inw_Del_Items() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -329,7 +329,7 @@ function Inw_Del_Items() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/inward-dc-input/", values)
+        .post("http://3.90.115.255:8080/inward-dc-input/", values)
         .then((response) => {
           if (counter === no_of_items) {
             alert("All items saved successfully");
@@ -373,7 +373,7 @@ function Inw_Del_Items() {
         
         try {
           const response = await axios.get(
-            `http://52.90.227.20:8080/getAdditionalInfo/${poNo}/${value}/`
+            `http://3.90.115.255:8080/getAdditionalInfo/${poNo}/${value}/`
           );
           const poDetails = response.data;
   
@@ -385,7 +385,7 @@ function Inw_Del_Items() {
           }));
 
           const pn = await axios.get(
-            `http://52.90.227.20:8080/get-part-name/${poDetails.part_id}/${cust_id}/`
+            `http://3.90.115.255:8080/get-part-name/${poDetails.part_id}/${cust_id}/`
           );
           const partMasterData = pn.data;
   
@@ -422,7 +422,7 @@ function Inw_Del_Items() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

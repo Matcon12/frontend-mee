@@ -30,7 +30,7 @@ function Register() {
 
   useEffect(() => {
     if (submitted) {
-      axios.post('http://52.90.227.20:8080/signup/', values)
+      axios.post('http://3.90.115.255:8080/signup/', values)
         .then((response) => {
           console.log('POST request successful', response);
           navigate('/');

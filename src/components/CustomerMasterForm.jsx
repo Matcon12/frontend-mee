@@ -88,7 +88,7 @@ function StateDropdown({ onSelect }) {
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get('http://52.90.227.20:8080/gststates');
+        const response = await axios.get('http://3.90.115.255:8080/gststates');
         setStates(response.data);
         //console.log(states);
       } catch (error) {
@@ -178,7 +178,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -194,7 +194,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/customer-master-input/", formData)
+        .post("http://3.90.115.255:8080/customer-master-input/", formData)
         .then((response) => {
           console.log("POST request successful", response);
           alert("Data Saved Successfully");
@@ -411,7 +411,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -427,7 +427,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/customer-master-input/", values)
+        .post("http://3.90.115.255:8080/customer-master-input/", values)
         .then((response) => {
           console.log("POST request successful", response);
           alert("Data Saved Successfully");

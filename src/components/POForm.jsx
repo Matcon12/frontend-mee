@@ -85,7 +85,7 @@ function POForm() {
   
     try {
       const response = await axios.get(
-        `http://52.90.227.20:8080/get-CN/${values.cust_id}`);
+        `http://3.90.115.255:8080/get-CN/${values.cust_id}`);
       console.log(response.data);
     } catch (error) {
       alert("Invalid Customer-ID");
@@ -132,7 +132,7 @@ function POForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -323,7 +323,7 @@ function POForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

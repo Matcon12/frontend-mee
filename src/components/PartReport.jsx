@@ -26,7 +26,7 @@ const PartReport =() =>{
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -43,7 +43,7 @@ const PartReport =() =>{
   const handleShowReport = async () => {
     try{
 
-      let apiurl= `http://52.90.227.20:8080/partreport/`;
+      let apiurl= `http://3.90.115.255:8080/partreport/`;
       if (custId) {
         apiurl += `?cust_id=${custId}`;
         if (partId) {

@@ -9,7 +9,7 @@ function DCPrinting() {
   const gcn_no = new URLSearchParams(location.search).get("dc_no");
 
   useEffect(() => {
-    const backendURL = 'http://52.90.227.20:8080/dc-printing/';
+    const backendURL = 'http://3.90.115.255:8080/dc-printing/';
 
     const data = {
       'gcn_no': gcn_no

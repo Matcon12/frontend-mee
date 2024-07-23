@@ -59,7 +59,7 @@ function InvoiceProcessing() {
       try {
         //const custId = e.target.value;
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${custId}/`
+          `http://3.90.115.255:8080/get-CN/${custId}/`
         );
         setValues((prevValues) => ({
           ...prevValues,
@@ -81,7 +81,7 @@ function InvoiceProcessing() {
     }));
     try {
       const response = await axios.get(
-        `http://52.90.227.20:8080/get-inw-details/${value}/`
+        `http://3.90.115.255:8080/get-inw-details/${value}/`
       );
       const inwDetails = response.data;
 
@@ -99,8 +99,8 @@ function InvoiceProcessing() {
         const consId = inwDetails.consignee_id;
 
         const [responseCust, responseCons] = await Promise.all([
-          axios.get(`http://52.90.227.20:8080/get-CN/${custId}`),
-          axios.get(`http://52.90.227.20:8080/get-CN/${consId}`),
+          axios.get(`http://3.90.115.255:8080/get-CN/${custId}`),
+          axios.get(`http://3.90.115.255:8080/get-CN/${consId}`),
         ]);
 
         const custName = responseCust.data.cust_name;
@@ -216,7 +216,7 @@ function InvoiceProcessing() {
     if (submitted) {
       console.log('FormData :',formData);
       axios
-        .post("http://52.90.227.20:8080/invoice-processing/", formData)
+        .post("http://3.90.115.255:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response.data);
 
@@ -256,7 +256,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -307,7 +307,7 @@ function InvoiceProcessing() {
     // if (grn_no && po_sl_no) {
     //   try {
     //     const response = await axios.get(
-    //       `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+    //       `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
     //     );
     //     const partDetails = response.data;
 
@@ -347,7 +347,7 @@ function InvoiceProcessing() {
     if (grn_no) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-inw-details/${grn_no}/`
+          `http://3.90.115.255:8080/get-inw-details/${grn_no}/`
         );
 
         const inwDetailsResponse = response.data;
@@ -360,7 +360,7 @@ function InvoiceProcessing() {
         setConsigneeId(consignee_id);
 
         const cons_name = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${consignee_id}/`
+          `http://3.90.115.255:8080/get-CN/${consignee_id}/`
         );
 
         //const consignee_name = cons_name.data.cust_name;
@@ -372,7 +372,7 @@ function InvoiceProcessing() {
         const custId = inwDetailsResponse.cust_id;
 
         const responseCust = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${custId}/`
+          `http://3.90.115.255:8080/get-CN/${custId}/`
         );
         const custName = responseCust.data.cust_name;
 
@@ -386,7 +386,7 @@ function InvoiceProcessing() {
         if (po_sl_no) {
           try {
             const response = await axios.get(
-              `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+              `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
             );
             const partDetails = response.data;
             console.log("partDetails");
@@ -560,7 +560,7 @@ function InvoiceProcessing() {
     }));
     try {
       const response = await axios.get(
-        `http://52.90.227.20:8080/get-inw-details/${value}/`
+        `http://3.90.115.255:8080/get-inw-details/${value}/`
       );
       const inwDetails = response.data;
 
@@ -578,8 +578,8 @@ function InvoiceProcessing() {
         const consId = inwDetails.consignee_id;
 
         const [responseCust, responseCons] = await Promise.all([
-          axios.get(`http://52.90.227.20:8080/get-CN/${custId}`),
-          axios.get(`http://52.90.227.20:8080/get-CN/${consId}`),
+          axios.get(`http://3.90.115.255:8080/get-CN/${custId}`),
+          axios.get(`http://3.90.115.255:8080/get-CN/${consId}`),
         ]);
 
         const custName = responseCust.data.cust_name;
@@ -690,7 +690,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/invoice-processing/", formData)
+        .post("http://3.90.115.255:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response.data);
 
@@ -730,7 +730,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -780,7 +780,7 @@ function InvoiceProcessing() {
     // if (grn_no && po_sl_no) {
     //   try {
     //     const response = await axios.get(
-    //       `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+    //       `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
     //     );
     //     const partDetails = response.data;
 
@@ -820,7 +820,7 @@ function InvoiceProcessing() {
     if (grn_no) {
       try {
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-inw-details/${grn_no}/`
+          `http://3.90.115.255:8080/get-inw-details/${grn_no}/`
         );
 
         const inwDetailsResponse = response.data;
@@ -833,7 +833,7 @@ function InvoiceProcessing() {
         const consignee_id = inwDetailsResponse.consignee_id;
 
         const cons_name = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${consignee_id}/`
+          `http://3.90.115.255:8080/get-CN/${consignee_id}/`
         );
 
         const consignee_name = cons_name.data.cust_name;
@@ -845,7 +845,7 @@ function InvoiceProcessing() {
         const custId = inwDetailsResponse.cust_id;
 
         const responseCust = await axios.get(
-          `http://52.90.227.20:8080/get-CN/${custId}/`
+          `http://3.90.115.255:8080/get-CN/${custId}/`
         );
         const custName = responseCust.data.cust_name;
 
@@ -862,7 +862,7 @@ function InvoiceProcessing() {
         if (po_sl_no) {
           try {
             const response = await axios.get(
-              `http://52.90.227.20:8080/i-p-details/${grn_no}/${po_sl_no}/`
+              `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
             );
             const partDetails = response.data;
             console.log("partDetails");

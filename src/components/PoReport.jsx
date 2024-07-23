@@ -21,7 +21,7 @@ const PoReport = () => {
   const getPoReport = async () => {
     try {
       console.log("sending request to backend");
-      let apiUrl = "http://52.90.227.20:8080/get-po-report/";
+      let apiUrl = "http://3.90.115.255:8080/get-po-report/";
 
       if (custId) {
         apiUrl += `?cust_id=${custId}`;
@@ -154,7 +154,7 @@ const PoReport = () => {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

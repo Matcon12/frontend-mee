@@ -69,7 +69,7 @@ function POFormItems() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/purchase-order-input/", values)
+        .post("http://3.90.115.255:8080/purchase-order-input/", values)
         .then((response) => {
           if (counter === no_of_items) {
             alert("All items saved successfully");
@@ -124,7 +124,7 @@ function POFormItems() {
         const custId = newValues.cust_id;
         console.log(custId, "cust id");
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-part-name/${value}/${custId}/`
+          `http://3.90.115.255:8080/get-part-name/${value}/${custId}/`
         );
         const partName = response.data.part_name;
 
@@ -173,7 +173,7 @@ function POFormItems() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -307,7 +307,7 @@ function POFormItems() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://52.90.227.20:8080/purchase-order-input/", values)
+        .post("http://3.90.115.255:8080/purchase-order-input/", values)
         .then((response) => {
           if (counter === no_of_items) {
             alert("All items saved successfully");
@@ -349,7 +349,7 @@ function POFormItems() {
         const custId = values.cust_id;
         console.log(custId, "cust id");
         const response = await axios.get(
-          `http://52.90.227.20:8080/get-part-name/${value}/${custId}/`
+          `http://3.90.115.255:8080/get-part-name/${value}/${custId}/`
         );
         const partName = response.data.part_name;
 
@@ -394,7 +394,7 @@ function POFormItems() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://52.90.227.20:8080/logout/")
+        .post("http://3.90.115.255:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
