@@ -1,5 +1,4 @@
-
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import matlogo from "../images/matlogo.png";
@@ -21,7 +20,7 @@ const PoReport = () => {
   const getPoReport = async () => {
     try {
       console.log("sending request to backend");
-      let apiUrl = "http://3.90.115.255:8080/get-po-report/";
+      let apiUrl = "http://18.209.166.105:8080/get-po-report/";
 
       if (custId) {
         apiUrl += `?cust_id=${custId}`;
@@ -29,7 +28,7 @@ const PoReport = () => {
           apiUrl += `&po_no=${poNo}`;
         }
       } else {
-        apiUrl += `?`; 
+        apiUrl += `?`;
       }
       if (poDate) {
         apiUrl += `&po_date=${poDate}`;
@@ -52,7 +51,8 @@ const PoReport = () => {
           );
 
           // Include Bootstrap CDN link for table styling
-          const bootstrapLink = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">';
+          const bootstrapLink =
+            '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">';
 
           // Add buttons, Bootstrap link, and styles to the HTML content
           const htmlWithStyles = `
@@ -109,11 +109,20 @@ const PoReport = () => {
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        ${Object.keys(responseData[0]).map((header) => `<th>${header}</th>`).join("")}
+                        ${Object.keys(responseData[0])
+                          .map((header) => `<th>${header}</th>`)
+                          .join("")}
                       </tr>
                     </thead>
                     <tbody>
-                      ${responseData.map((row) => `<tr>${Object.values(row).map((value) => `<td>${value}</td>`).join("")}</tr>`).join("")}
+                      ${responseData
+                        .map(
+                          (row) =>
+                            `<tr>${Object.values(row)
+                              .map((value) => `<td>${value}</td>`)
+                              .join("")}</tr>`
+                        )
+                        .join("")}
                     </tbody>
                   </table>
                 </div>
@@ -154,7 +163,7 @@ const PoReport = () => {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

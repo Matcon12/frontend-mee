@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "../app.css";
 import matlogo from "../images/matlogo.png";
@@ -62,7 +61,7 @@ function InvoiceReports() {
       );
       setLoading(true);
       const postReq = await axios.post(
-        "http://3.90.115.255:8080/invoice-report/",
+        "http://18.209.166.105:8080/invoice-report/",
         {
           start_date: startDate,
           end_date: endDate,
@@ -87,7 +86,8 @@ function InvoiceReports() {
           );
 
           // Include Bootstrap CDN link for table styling
-          const bootstrapLink = '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">';
+          const bootstrapLink =
+            '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">';
 
           // Add buttons, Bootstrap link, and styles to the HTML content
           const htmlWithStyles = `
@@ -147,11 +147,20 @@ function InvoiceReports() {
                 <table class="table table-bordered">
                   <thead>
                     <tr>
-                      ${Object.keys(responseData[0]).map((header) => `<th>${header}</th>`).join("")}
+                      ${Object.keys(responseData[0])
+                        .map((header) => `<th>${header}</th>`)
+                        .join("")}
                     </tr>
                   </thead>
                   <tbody>
-                    ${responseData.map((row) => `<tr>${Object.values(row).map((value) => `<td>${value}</td>`).join("")}</tr>`).join("")}
+                    ${responseData
+                      .map(
+                        (row) =>
+                          `<tr>${Object.values(row)
+                            .map((value) => `<td>${value}</td>`)
+                            .join("")}</tr>`
+                      )
+                      .join("")}
                   </tbody>
                 </table>
               </div>
@@ -177,7 +186,7 @@ function InvoiceReports() {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://3.90.115.255:8080/logout/");
+      const response = await axios.post("http://18.209.166.105:8080/logout/");
       console.log("POST request successful", response);
       alert("Logout Successful");
       navigate("/");

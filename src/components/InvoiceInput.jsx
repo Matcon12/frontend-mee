@@ -33,7 +33,7 @@ function InvoiceInput() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -58,7 +58,6 @@ function InvoiceInput() {
     // Check if the current date is before April 1st
     var cur = today.getFullYear();
     if (currentMonth < 4) {
-     
       return "/" + (cur - 1) + "-" + (cur % 100);
     } else {
       return "/" + cur + "-" + ((cur + 1) % 100);

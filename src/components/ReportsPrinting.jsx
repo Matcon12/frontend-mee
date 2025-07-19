@@ -16,7 +16,7 @@ function ReportsPrinting() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successfull");

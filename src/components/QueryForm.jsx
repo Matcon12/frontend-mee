@@ -124,7 +124,7 @@ const QueryForm = () => {
       }));
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${value}/`
+          `http://18.209.166.105:8080/get-CN/${value}/`
         );
         const CN = response.data.cust_name;
         console.log(CN, "cust name");
@@ -154,7 +154,7 @@ const QueryForm = () => {
     if (name === "part_id" && value && values.cust_id) {
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-part-name/${value}/${values.cust_id}/`
+          `http://18.209.166.105:8080/get-part-name/${value}/${values.cust_id}/`
         );
         const partName = response.data.part_name;
 
@@ -186,7 +186,7 @@ const QueryForm = () => {
       }));
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-details/${value}/`
+          `http://18.209.166.105:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
 
@@ -199,7 +199,7 @@ const QueryForm = () => {
         try {
           const custId = poDetails.cust_id;
           const responseCust = await axios.get(
-            `http://3.90.115.255:8080/get-CN/${custId}/`
+            `http://18.209.166.105:8080/get-CN/${custId}/`
           );
           const custName = responseCust.data.cust_name;
 
@@ -227,7 +227,7 @@ const QueryForm = () => {
       console.log("Inside if condition for PO details with part_id");
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-sl-no-details/${value}/${values.part_id}/`
+          `http://18.209.166.105:8080/get-po-sl-no-details/${value}/${values.part_id}/`
         );
         const data = response.data;
         console.log(data, "from backend");
@@ -257,7 +257,7 @@ const QueryForm = () => {
       }));
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-inw-details/${value}/`
+          `http://18.209.166.105:8080/get-inw-details/${value}/`
         );
         const inwDetails = response.data;
 
@@ -272,7 +272,7 @@ const QueryForm = () => {
         try {
           const custId = inwDetails.cust_id;
           const responseCust = await axios.get(
-            `http://3.90.115.255:8080/get-CN/${custId}/`
+            `http://18.209.166.105:8080/get-CN/${custId}/`
           );
           const custName = responseCust.data.cust_name;
 
@@ -304,7 +304,7 @@ const QueryForm = () => {
       console.log("Before Axios request");
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-sl-no-details-inw/${value}/${values.part_id}/`
+          `http://18.209.166.105:8080/get-po-sl-no-details-inw/${value}/${values.part_id}/`
         );
         const data = response.data;
         console.log(data, "from backend");
@@ -330,7 +330,7 @@ const QueryForm = () => {
       console.log("Before Axios request for reverse case");
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-sl-no-details/${values.po_no}/${value}/`
+          `http://18.209.166.105:8080/get-po-sl-no-details/${values.po_no}/${value}/`
         );
         const data = response.data;
         console.log(data, "from backend");
@@ -356,7 +356,7 @@ const QueryForm = () => {
       console.log("Before Axios request for reverse case");
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-sl-no-details-inw/${values.grn_no}/${value}/`
+          `http://18.209.166.105:8080/get-po-sl-no-details-inw/${values.grn_no}/${value}/`
         );
         const data = response.data;
         console.log(data, "from backend");
@@ -381,7 +381,7 @@ const QueryForm = () => {
     if (name === "po_sl_no" && value && values.po_no) {
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/po-sl-no/${values.po_no}/${value}/`
+          `http://18.209.166.105:8080/po-sl-no/${values.po_no}/${value}/`
         );
 
         if (response.data && response.data.part_id) {
@@ -401,7 +401,7 @@ const QueryForm = () => {
             const custId = values.cust_id; // Assuming cust_id is already set
 
             const responsePart = await axios.get(
-              `http://3.90.115.255:8080/get-part-name/${partId}/${custId}/`
+              `http://18.209.166.105:8080/get-part-name/${partId}/${custId}/`
             );
             const partDetails = responsePart.data;
 
@@ -465,7 +465,7 @@ const QueryForm = () => {
     if (name === "po_sl_no" && value && values.grn_no) {
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/po-sl-no-inw/${values.grn_no}/${value}/`
+          `http://18.209.166.105:8080/po-sl-no-inw/${values.grn_no}/${value}/`
         );
 
         if (response.data && response.data.part_id) {
@@ -484,7 +484,7 @@ const QueryForm = () => {
             const custId = values.cust_id; // Assuming cust_id is already set
 
             const responsePart = await axios.get(
-              `http://3.90.115.255:8080/get-part-name/${partId}/${custId}/`
+              `http://18.209.166.105:8080/get-part-name/${partId}/${custId}/`
             );
             const partDetails = responsePart.data;
 
@@ -550,7 +550,7 @@ const QueryForm = () => {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert(response.data.message);

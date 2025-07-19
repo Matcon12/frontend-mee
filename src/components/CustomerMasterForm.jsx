@@ -1,8 +1,8 @@
-// Re-written by TJ 
+// Re-written by TJ
 // incorporated the dropdown list of gst_state_names to do state_name selection
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import FormInput from "./FormInput";
 import { useNavigate } from "react-router-dom";
 import Header from "./common/Header";
@@ -78,21 +78,23 @@ const inputs = [
     type: "number",
     label: "State Code",
     required: true,
-  }
+  },
 ];
 
 function StateDropdown({ onSelect }) {
   const [states, setStates] = useState([]);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState("");
 
   useEffect(() => {
     const fetchStates = async () => {
       try {
-        const response = await axios.get('http://3.90.115.255:8080/gststates');
+        const response = await axios.get(
+          "http://18.209.166.105:8080/gststates"
+        );
         setStates(response.data);
         //console.log(states);
       } catch (error) {
-        console.error('Error fetching states:', error);
+        console.error("Error fetching states:", error);
       }
     };
 
@@ -124,25 +126,27 @@ function CustomerMasterForm() {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    cust_id: '',
-    cust_name: '',
-    cust_addr1: '',
-    cust_addr2: '',
-    cust_city: '',
-    cust_pin: '',
-    cust_gst_id: '',
-    cust_st_name: '',
-    cust_st_code: '',
+    cust_id: "",
+    cust_name: "",
+    cust_addr1: "",
+    cust_addr2: "",
+    cust_city: "",
+    cust_pin: "",
+    cust_gst_id: "",
+    cust_st_name: "",
+    cust_st_code: "",
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
-    console.log("formData",formData)
+    console.log("formData", formData);
   };
 
   const handleStateSelect = (selectedState, states) => {
-    const selectedStateData = states.find((state) => state.state_name === selectedState);
+    const selectedStateData = states.find(
+      (state) => state.state_name === selectedState
+    );
     if (selectedStateData) {
       setFormData((prevData) => ({
         ...prevData,
@@ -154,7 +158,7 @@ function CustomerMasterForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     if (formData.cust_id.length !== 4) {
       alert("Enter 4 character Customer-ID");
       return; // Return to exit the function early
@@ -178,7 +182,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -194,7 +198,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://3.90.115.255:8080/customer-master-input/", formData)
+        .post("http://18.209.166.105:8080/customer-master-input/", formData)
         .then((response) => {
           console.log("POST request successful", response);
           alert("Data Saved Successfully");
@@ -214,12 +218,12 @@ function CustomerMasterForm() {
   return (
     <div className="app">
       <Header />
-       <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h1>Customer Details</h1>
-        {inputs.map(input => (
+        {inputs.map((input) => (
           <div key={input.id}>
             <label htmlFor={input.name}>{input.label}</label>
-            {input.name === 'cust_st_code' ? (
+            {input.name === "cust_st_code" ? (
               <input
                 type={input.type}
                 id={input.name}
@@ -230,7 +234,7 @@ function CustomerMasterForm() {
                 maxLength={input.maxLength}
                 disabled // No user input allowed
               />
-            ) : input.name === 'cust_st_name' ? (
+            ) : input.name === "cust_st_name" ? (
               <StateDropdown onSelect={handleStateSelect} />
             ) : (
               <input
@@ -253,7 +257,8 @@ function CustomerMasterForm() {
 
 export default CustomerMasterForm;
 
-{/*
+{
+  /*
 import React from "react";
 import { useState } from "react";
 import FormInput from "./FormInput";
@@ -411,7 +416,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -427,7 +432,7 @@ function CustomerMasterForm() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://3.90.115.255:8080/customer-master-input/", values)
+        .post("http://18.209.166.105:8080/customer-master-input/", values)
         .then((response) => {
           console.log("POST request successful", response);
           alert("Data Saved Successfully");
@@ -492,4 +497,5 @@ function CustomerMasterForm() {
 }
 
 export default CustomerMasterForm;
-*/}
+*/
+}

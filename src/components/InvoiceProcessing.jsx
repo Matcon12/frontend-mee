@@ -40,26 +40,25 @@ function InvoiceProcessing() {
       console.log("Enter a Valid Quantity");
       alert("Enter a Valid Quantity");
       return;
-    }
-    else {
+    } else {
       setQty(items);
     }
   };
 
   // Modified by TJ
 
-  const handleConsigneeIdChange = async(e) => {
+  const handleConsigneeIdChange = async (e) => {
     const custId = e.target.value;
     setValues((prevValues) => ({
       ...prevValues,
       consignee_name: "",
-    }))
+    }));
 
     if (custId) {
       try {
         //const custId = e.target.value;
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${custId}/`
+          `http://18.209.166.105:8080/get-CN/${custId}/`
         );
         setValues((prevValues) => ({
           ...prevValues,
@@ -81,7 +80,7 @@ function InvoiceProcessing() {
     }));
     try {
       const response = await axios.get(
-        `http://3.90.115.255:8080/get-inw-details/${value}/`
+        `http://18.209.166.105:8080/get-inw-details/${value}/`
       );
       const inwDetails = response.data;
 
@@ -99,8 +98,8 @@ function InvoiceProcessing() {
         const consId = inwDetails.consignee_id;
 
         const [responseCust, responseCons] = await Promise.all([
-          axios.get(`http://3.90.115.255:8080/get-CN/${custId}`),
-          axios.get(`http://3.90.115.255:8080/get-CN/${consId}`),
+          axios.get(`http://18.209.166.105:8080/get-CN/${custId}`),
+          axios.get(`http://18.209.166.105:8080/get-CN/${consId}`),
         ]);
 
         const custName = responseCust.data.cust_name;
@@ -143,7 +142,7 @@ function InvoiceProcessing() {
     }),
     rejected: rejectedFlag,
     mcc: "MEE",
-    cust_id:"",
+    cust_id: "",
     grn_no: "",
   });
 
@@ -202,7 +201,9 @@ function InvoiceProcessing() {
 
       obj = {
         po_sl_no: document.getElementsByName(`Po_slno_${i}`)[0]?.value,
-        qty_delivered: parseInt(document.getElementsByName(`items_${i}`)[0]?.value),
+        qty_delivered: parseInt(
+          document.getElementsByName(`items_${i}`)[0]?.value
+        ),
       };
 
       newFormData[key] = obj;
@@ -214,9 +215,9 @@ function InvoiceProcessing() {
 
   useEffect(() => {
     if (submitted) {
-      console.log('FormData :',formData);
+      console.log("FormData :", formData);
       axios
-        .post("http://3.90.115.255:8080/invoice-processing/", formData)
+        .post("http://18.209.166.105:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response.data);
 
@@ -256,7 +257,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -283,9 +284,12 @@ function InvoiceProcessing() {
 
     // Check if GRN, PO_SL_NO and Qty_delivered are entered
     const grn_no = document.getElementsByName("inw")[0]?.value;
-    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]?.value;
-    const qty_del = parseInt(document.getElementsByName(`items_${itemIndex}`)[0]?.value);
-    console.log("GRN:", grn_no, "PO_Sl_No:",po_sl_no,"Qty_del:",qty_del);
+    const po_sl_no = document.getElementsByName(`Po_slno_${itemIndex}`)[0]
+      ?.value;
+    const qty_del = parseInt(
+      document.getElementsByName(`items_${itemIndex}`)[0]?.value
+    );
+    console.log("GRN:", grn_no, "PO_Sl_No:", po_sl_no, "Qty_del:", qty_del);
 
     setFormData((prevData) => {
       const updatedItems = prevData?.items?.map((item, i) => {
@@ -307,7 +311,7 @@ function InvoiceProcessing() {
     // if (grn_no && po_sl_no) {
     //   try {
     //     const response = await axios.get(
-    //       `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
+    //       `http://18.209.166.105:8080/i-p-details/${grn_no}/${po_sl_no}/`
     //     );
     //     const partDetails = response.data;
 
@@ -347,7 +351,7 @@ function InvoiceProcessing() {
     if (grn_no) {
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-inw-details/${grn_no}/`
+          `http://18.209.166.105:8080/get-inw-details/${grn_no}/`
         );
 
         const inwDetailsResponse = response.data;
@@ -356,11 +360,13 @@ function InvoiceProcessing() {
           ...prevValues,
           po_no: inwDetailsResponse.po_no,
         }));
-        const consignee_id = consigneeId ? consigneeId : inwDetailsResponse.consignee_id;
+        const consignee_id = consigneeId
+          ? consigneeId
+          : inwDetailsResponse.consignee_id;
         setConsigneeId(consignee_id);
 
         const cons_name = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${consignee_id}/`
+          `http://18.209.166.105:8080/get-CN/${consignee_id}/`
         );
 
         //const consignee_name = cons_name.data.cust_name;
@@ -372,7 +378,7 @@ function InvoiceProcessing() {
         const custId = inwDetailsResponse.cust_id;
 
         const responseCust = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${custId}/`
+          `http://18.209.166.105:8080/get-CN/${custId}/`
         );
         const custName = responseCust.data.cust_name;
 
@@ -386,7 +392,7 @@ function InvoiceProcessing() {
         if (po_sl_no) {
           try {
             const response = await axios.get(
-              `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
+              `http://18.209.166.105:8080/i-p-details/${grn_no}/${po_sl_no}/`
             );
             const partDetails = response.data;
             console.log("partDetails");
@@ -401,7 +407,8 @@ function InvoiceProcessing() {
             setPartDetails((prevDetails) => {
               const updatedDetails = [...prevDetails];
               updatedDetails[itemIndex] = partDetails;
-              updatedDetails[itemIndex].tot_price = updatedDetails[itemIndex].unit_price*qty_del;
+              updatedDetails[itemIndex].tot_price =
+                updatedDetails[itemIndex].unit_price * qty_del;
               return updatedDetails;
             });
 
@@ -439,7 +446,6 @@ function InvoiceProcessing() {
       }
     }
   };
-
 
   return (
     <div className="app">
@@ -492,9 +498,9 @@ function InvoiceProcessing() {
             readOnly
           />
           <label>Enter New Consignee ID (if required)</label>
-          <input 
-            type="text" 
-            name="new_cons_id" 
+          <input
+            type="text"
+            name="new_cons_id"
             maxLength={4}
             onBlur={handleConsigneeIdChange}
           />
@@ -509,8 +515,8 @@ function InvoiceProcessing() {
 }
 export default InvoiceProcessing;
 
-
-{/*
+{
+  /*
 import React, { useState, useEffect } from "react";
 import "../app.css";
 import "./formInput.css";
@@ -560,7 +566,7 @@ function InvoiceProcessing() {
     }));
     try {
       const response = await axios.get(
-        `http://3.90.115.255:8080/get-inw-details/${value}/`
+        `http://18.209.166.105:8080/get-inw-details/${value}/`
       );
       const inwDetails = response.data;
 
@@ -578,8 +584,8 @@ function InvoiceProcessing() {
         const consId = inwDetails.consignee_id;
 
         const [responseCust, responseCons] = await Promise.all([
-          axios.get(`http://3.90.115.255:8080/get-CN/${custId}`),
-          axios.get(`http://3.90.115.255:8080/get-CN/${consId}`),
+          axios.get(`http://18.209.166.105:8080/get-CN/${custId}`),
+          axios.get(`http://18.209.166.105:8080/get-CN/${consId}`),
         ]);
 
         const custName = responseCust.data.cust_name;
@@ -690,7 +696,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://3.90.115.255:8080/invoice-processing/", formData)
+        .post("http://18.209.166.105:8080/invoice-processing/", formData)
         .then((response) => {
           console.log("POST request successful", response.data);
 
@@ -730,7 +736,7 @@ function InvoiceProcessing() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -780,7 +786,7 @@ function InvoiceProcessing() {
     // if (grn_no && po_sl_no) {
     //   try {
     //     const response = await axios.get(
-    //       `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
+    //       `http://18.209.166.105:8080/i-p-details/${grn_no}/${po_sl_no}/`
     //     );
     //     const partDetails = response.data;
 
@@ -820,7 +826,7 @@ function InvoiceProcessing() {
     if (grn_no) {
       try {
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-inw-details/${grn_no}/`
+          `http://18.209.166.105:8080/get-inw-details/${grn_no}/`
         );
 
         const inwDetailsResponse = response.data;
@@ -833,7 +839,7 @@ function InvoiceProcessing() {
         const consignee_id = inwDetailsResponse.consignee_id;
 
         const cons_name = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${consignee_id}/`
+          `http://18.209.166.105:8080/get-CN/${consignee_id}/`
         );
 
         const consignee_name = cons_name.data.cust_name;
@@ -845,7 +851,7 @@ function InvoiceProcessing() {
         const custId = inwDetailsResponse.cust_id;
 
         const responseCust = await axios.get(
-          `http://3.90.115.255:8080/get-CN/${custId}/`
+          `http://18.209.166.105:8080/get-CN/${custId}/`
         );
         const custName = responseCust.data.cust_name;
 
@@ -862,7 +868,7 @@ function InvoiceProcessing() {
         if (po_sl_no) {
           try {
             const response = await axios.get(
-              `http://3.90.115.255:8080/i-p-details/${grn_no}/${po_sl_no}/`
+              `http://18.209.166.105:8080/i-p-details/${grn_no}/${po_sl_no}/`
             );
             const partDetails = response.data;
             console.log("partDetails");
@@ -969,4 +975,5 @@ function InvoiceProcessing() {
   );
 }
 export default InvoiceProcessing;
-*/}
+*/
+}

@@ -30,7 +30,7 @@ function PartMaster() {
   useEffect(() => {
     if (submitted) {
       axios
-        .post("http://3.90.115.255:8080/part-master-input/", formData)
+        .post("http://18.209.166.105:8080/part-master-input/", formData)
         .then((response) => {
           console.log("POST request successful", response);
           alert("Data Saved Successfully");
@@ -44,7 +44,8 @@ function PartMaster() {
 
           if (error.response.data["cust_id"]) {
             alert("Please enter a valid CUSTOMER-ID");
-          } else {   //if (error.response.data["part_id"]) {
+          } else {
+            //if (error.response.data["part_id"]) {
             alert("Invalid PART-ID or PART NAME");
           }
         });
@@ -55,7 +56,7 @@ function PartMaster() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");

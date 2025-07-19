@@ -64,7 +64,7 @@ function POForm() {
   const navigate = useNavigate();
   const [qty, setQty] = useState(0);
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     var nos = document.getElementsByName("total_items")[0]?.value;
     setQty(nos);
@@ -82,10 +82,11 @@ function POForm() {
     //  alert("Enter 4 character Customer-ID");
     //  return;
     //}
-  
+
     try {
       const response = await axios.get(
-        `http://3.90.115.255:8080/get-CN/${values.cust_id}`);
+        `http://18.209.166.105:8080/get-CN/${values.cust_id}`
+      );
       console.log(response.data);
     } catch (error) {
       alert("Invalid Customer-ID");
@@ -132,7 +133,7 @@ function POForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -196,7 +197,8 @@ function POForm() {
 
 export default POForm;
 
-{/*
+{
+  /*
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -323,7 +325,7 @@ function POForm() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -345,7 +347,10 @@ function POForm() {
     <div className="app">
       <Header />
       <div className="container">
-{/*        <img src={matlogo} alt="MatconLogo" className="logo" />*/}{/*
+{/*        <img src={matlogo} alt="MatconLogo" className="logo" />*/
+}
+{
+  /*
       </div>
       <form onSubmit={handleSubmit}>
         <h1>Purchase Order</h1>
@@ -386,4 +391,5 @@ function POForm() {
 }
 
 export default POForm;
-*/}
+*/
+}

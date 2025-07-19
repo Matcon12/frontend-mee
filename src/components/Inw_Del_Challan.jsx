@@ -76,7 +76,7 @@ function Inw_Del_Challan() {
     },
   ];
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const inwDcDate = new Date(values.inw_dc_date);
@@ -98,7 +98,8 @@ function Inw_Del_Challan() {
 
     try {
       const response = await axios.get(
-        `http://3.90.115.255:8080/get-po-details/${values.po_no}`);
+        `http://18.209.166.105:8080/get-po-details/${values.po_no}`
+      );
       console.log(response.data);
     } catch (error) {
       alert("Invalid PO Number");
@@ -132,7 +133,7 @@ function Inw_Del_Challan() {
       try {
         console.log("Before axios request. po_no:", value);
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-details/${value}/`
+          `http://18.209.166.105:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
         setValues((prevValues) => ({
@@ -153,7 +154,7 @@ function Inw_Del_Challan() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -208,8 +209,8 @@ function Inw_Del_Challan() {
 
 export default Inw_Del_Challan;
 
-
-{/*
+{
+  /*
 import React, { useEffect, useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
@@ -335,7 +336,7 @@ function Inw_Del_Challan() {
       try {
         console.log("Before axios request. po_no:", value);
         const response = await axios.get(
-          `http://3.90.115.255:8080/get-po-details/${value}/`
+          `http://18.209.166.105:8080/get-po-details/${value}/`
         );
         const poDetails = response.data;
         setValues((prevValues) => ({
@@ -356,7 +357,7 @@ function Inw_Del_Challan() {
   useEffect(() => {
     if (out) {
       axios
-        .post("http://3.90.115.255:8080/logout/")
+        .post("http://18.209.166.105:8080/logout/")
         .then((response) => {
           console.log("POST request successful", response);
           alert("Logout Successful");
@@ -410,4 +411,5 @@ function Inw_Del_Challan() {
 }
 
 export default Inw_Del_Challan;
-*/}
+*/
+}
